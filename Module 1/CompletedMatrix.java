@@ -14,8 +14,8 @@ public class CompletedMatrix implements Matrix {
     private int[][] matrix; // for constructor, using int
 
     public CompletedMatrix(int[][] matrix) { // constructor
-        if (matrix = NULL){
-            throw new IllegalArgumentException(); //edgecase null matrix
+        if (matrix == null) {
+            throw new IllegalArgumentException(); // edgecase null matrix
         }
         this.matrix = matrix;
     }
@@ -35,14 +35,16 @@ public class CompletedMatrix implements Matrix {
 
     @Override
     public int getColumns() {
-        if(matrix.length == 0) //edgecase 0x0
+        if (matrix.length == 0) // edgecase 0x0
             return 0;
         return matrix[0].length;
     }
 
     @Override
     public Matrix scale(int scalar) {
-        int[][] newMatrix = new int[getRows()][getColumns()]; // new matrix using same size with get function
+        int rows = getRows();
+        int columns = getColumns();
+        int[][] newMatrix = new int[rows][columns]; // new matrix using same size with get function
         for (int y = 0; y < getRows(); y++) {
             for (int x = 0; x < getColumns(); x++) {
                 newMatrix[y][x] = matrix[y][x] * scalar; // scaling function
@@ -53,7 +55,15 @@ public class CompletedMatrix implements Matrix {
 
     @Override
     public Matrix plus(Matrix other) {
-        int[][] newMatrix = new int[getRows()][getColumns()]; // new matrix using same size with get function
+        if (other == null) {
+            throw new IllegalArgumentException();
+        }
+        if ((other.getColumns() != getColumns()) || (other.getRows() != getRows())) {
+            throw new RuntimeException();
+        }
+        int rows = getRows();
+        int columns = getColumns();
+        int[][] newMatrix = new int[rows][columns]; // new matrix using same size with get function
         for (int y = 0; y < getRows(); y++) {
             for (int x = 0; x < getColumns(); x++) {
                 newMatrix[y][x] = matrix[y][x] + other.getElement(y, x); // scaling function
@@ -64,7 +74,15 @@ public class CompletedMatrix implements Matrix {
 
     @Override
     public Matrix minus(Matrix other) {
-        int[][] newMatrix = new int[getRows()][getColumns()]; // new matrix using same size with get function
+        if (other == null) { // null matrix exception
+            throw new IllegalArgumentException();
+        }
+        if ((other.getColumns() != getColumns()) || (other.getRows() != getRows())) {
+            throw new RuntimeException();
+        }
+        int rows = getRows();
+        int columns = getColumns();
+        int[][] newMatrix = new int[rows][columns]; // new matrix using same size with get function
         for (int y = 0; y < getRows(); y++) {
             for (int x = 0; x < getColumns(); x++) {
                 newMatrix[y][x] = matrix[y][x] - other.getElement(y, x); // scaling function
@@ -75,6 +93,9 @@ public class CompletedMatrix implements Matrix {
 
     @Override
     public Matrix multiply(Matrix other) {
+        if (other == null) {
+            throw new IllegalArgumentException();
+        }
         int[][] result = new int[getRows()][other.getColumns()]; // new matrix
         for (int y = 0; y < getRows(); y++) { // set y to be row
             for (int x = 0; x < other.getColumns(); x++) { // set x to be the given matrix to use for multiplying
@@ -86,6 +107,42 @@ public class CompletedMatrix implements Matrix {
             }
         }
         return new CompletedMatrix(result);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringMatrix = new StringBuilder();
+        for (int y = 0; y < matrix.length; y++) { // row
+            for (int x = 0; x < matrix[y].length; x++) { // column
+                stringMatrix.append(matrix[y][x]); // append [row][column]
+                if (x < matrix[y].length - 1) {
+                    stringMatrix.append(" "); // space in between
+                }
+            }
+            stringMatrix.append("\n"); // newline once done with row
+        }
+        return stringMatrix.toString(); //
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if ((other == null) || (!(other instanceof CompletedMatrix))) { // check for null and same instance
+            return false;
+        }
+
+        CompletedMatrix given = (CompletedMatrix) other; // if good then cast and check dimensions
+        if (this.getRows() != given.getRows() || this.getColumns() != given.getColumns()) {
+            return false;
+        }
+        for (int y = 0; y < this.getRows(); y++) { // check all elements
+            for (int x = 0; x < this.getColumns(); x++) {
+                if (this.getElement(y, x) != given.getElement(y, x)) {
+                    return false; // on mistmatch return false
+                }
+            }
+        }
+
+        return true; // if all good return true
     }
 
     /**

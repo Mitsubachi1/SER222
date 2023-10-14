@@ -17,8 +17,12 @@ public class CompletedMatrix implements Matrix {
     }
 
     @Override
-    public int getElement(int y, int x) {
-        throw new java.lang.UnsupportedOperationException("TODO!");
+    public int getElement(int y, int x) { //y is row x is column
+        if ((x >= 0 && x < matrix[0].length) && (y >= 0 && y < matrix.length)){
+            return matrix[y][x];
+        }
+
+        //throw new java.lang.UnsupportedOperationException("TODO!");
     }
 
     @Override

@@ -1,5 +1,5 @@
-package edu.ser222.m01_02;
-
+//package edu.ser222.m01_02;
+package Module_1;
 /**
  * An implementation of the Matrix ADT. Provides four basic operations over an
  * immutable type.
@@ -11,13 +11,20 @@ package edu.ser222.m01_02;
 
 public class CompletedMatrix implements Matrix {
 
-    private int[][] matrix; // for constructor, using int
+    private final int[][] matrix; // for constructor, using int
 
     public CompletedMatrix(int[][] matrix) { // constructor
         if (matrix == null) {
             throw new IllegalArgumentException(); // edgecase null matrix
         }
-        this.matrix = matrix;
+        this.matrix = new int[matrix.length][]; //copy input matrix to make immutable
+        for(int y = 0; y < matrix.length; y++){
+            this.matrix[y] = new int[matrix[y].length]; //process length
+            for(int x = 0; x < matrix[y].length; x++){
+                this.matrix[y][x] = matrix[y][x]; //copy matrix
+            }
+
+        }
     }
 
     @Override
@@ -198,5 +205,6 @@ public class CompletedMatrix implements Matrix {
         // System.out.println("m1 + m2" + m1.plus(m2));
         // System.out.println("m1 + m5" + m1.plus(m5));
         // System.out.println("m1 - m2" + m1.minus(m2));
+
     }
 }

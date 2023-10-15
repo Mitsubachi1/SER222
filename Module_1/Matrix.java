@@ -5,8 +5,8 @@
  * 
  * @author Ruben Acuna
  */
-package edu.ser222.m01_02;
-
+//package edu.ser222.m01_02;
+package Module_1;
 public interface Matrix {
     
     /**

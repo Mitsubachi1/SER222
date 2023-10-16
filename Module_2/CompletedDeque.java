@@ -8,16 +8,27 @@ import java.util.NoSuchElementException;
  * a main that
  * demonstrates it.
  * 
- * @author (your name), Acuna
+ * @author Angel Chiquito, Acuna
  * @version (version)
  */
 
 public class CompletedDeque<Item> implements Deque<Item> {
     int count = 0;
     // TODO: implement all the methods
+    private Node<Item> front;
+    private Node<Item> back;
 
-    public void enqueueFront(Item element){
-
+    public void enqueueFront(Item element) {
+        Node<Item> newNode = new Node<>(element);
+        if (isEmpty()) {
+            front = newNode;
+            back = newNode;
+        } else {
+            newNode.next = front;
+            front.previous = newNode;
+            front = newNode;
+        }
+        count++;
     }
 
     /**
@@ -25,8 +36,17 @@ public class CompletedDeque<Item> implements Deque<Item> {
      * 
      * @param element the element to be added to the back of the deque
      */
-    public void enqueueBack(Item element){
-
+    public void enqueueBack(Item element) {
+        Node<Item> newNode = new Node<>(element);
+        if (isEmpty()) {
+            front = newNode;
+            back = newNode;
+        } else {
+            newNode.previous = back;
+            back.next = newNode;
+            back = newNode;
+        }
+        count++;
     }
 
     /**
@@ -36,8 +56,20 @@ public class CompletedDeque<Item> implements Deque<Item> {
      * @return the element at the front of this deque
      * @throws NoSuchElementException if the deque is empty
      */
-    public Item dequeueFront() throws NoSuchElementException{
-        return null; // placeholder MMUST CHANGE
+    public Item dequeueFront() throws NoSuchElementException {
+        if (isEmpty()) {
+            throw new NoSuchElementException(); // throw if empty
+        }
+        Item element = front.data; // keep tab on front data
+        if (front == back) { // case of one element
+            front = null;
+            back = null;
+        } else { // case of many
+            front = front.next;
+            front.previous = null;
+        }
+        count--;
+        return element;
     }
 
     /**
@@ -47,8 +79,20 @@ public class CompletedDeque<Item> implements Deque<Item> {
      * @return the element at the back of the deque.
      * @throws NoSuchElementException if the deque is empty
      */
-    public Item dequeueBack() throws NoSuchElementException{
-        return null; // placeholder MMUST CHANGE
+    public Item dequeueBack() throws NoSuchElementException {
+        if (isEmpty()) {
+            throw new NoSuchElementException(); // throw on empty
+        }
+        Item element = back.data;
+        if (back == front) { // case of one element
+            front = null;
+            back = null;
+        } else { // case of many
+            back = back.previous;
+            back.next = null;
+        }
+        count--;
+        return element;
     }
 
     /**
@@ -58,8 +102,9 @@ public class CompletedDeque<Item> implements Deque<Item> {
      * @return the first element in the deque
      * @throws NoSuchElementException if the deque is empty
      */
-    public Item first() throws NoSuchElementException{
-        return null; // placeholder MMUST CHANGE
+    public Item first() throws NoSuchElementException {
+        Item element = front.data;
+        return element;
     }
 
     /**
@@ -69,8 +114,9 @@ public class CompletedDeque<Item> implements Deque<Item> {
      * @return the last element in the deque
      * @throws NoSuchElementException if the deque is empty
      */
-    public Item last() throws NoSuchElementException{
-        return null; // placeholder MMUST CHANGE
+    public Item last() throws NoSuchElementException {
+        Item element = back.data;
+        return element;
     }
 
     /**
@@ -78,8 +124,11 @@ public class CompletedDeque<Item> implements Deque<Item> {
      * 
      * @return if deque empty
      */
-    public boolean isEmpty(){
-        return true; // placeholder
+    public boolean isEmpty() {
+        if (count == 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -87,7 +136,7 @@ public class CompletedDeque<Item> implements Deque<Item> {
      * 
      * @return the number of elements in the deque
      */
-    public int size(){
+    public int size() {
         return count;
     }
 
@@ -99,8 +148,30 @@ public class CompletedDeque<Item> implements Deque<Item> {
      * @return the string representation of the deque
      */
     @Override
-    public String toString(){
-        return "";
+    public String toString() {
+        StringBuilder stringresult = new StringBuilder();
+        Node<Item> node = front;
+        if (isEmpty()) {
+            return "empty";
+        }
+        while (node != null) {
+            stringresult.append(node.data);
+            stringresult.append(" "); // space
+            node = node.next; // move to the next node
+        }
+        return stringresult.toString();
+    }
+
+    private static class Node<Item> { // node class for node
+        private Item data;
+        private Node<Item> next;
+        private Node<Item> previous;
+
+        public Node(Item data) {
+            this.data = data;
+            this.next = null;
+            this.previous = null;
+        }
     }
 
     /**

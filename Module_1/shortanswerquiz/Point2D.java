@@ -39,11 +39,12 @@ public class Point2D {
     public static void displayShortDistance(Point2D[] points) {
         for (int i = 0; i < points.length; i++) { // for current point, check everything else
             for (int j = 0; j < points.length; j++) {
-                if(!(points[i].equals(points[j]))){ // if not equals find its distance
+                if (!(points[i].equals(points[j]))) { // if not equals find its distance
                     double distance = points[i].distanceTo(points[j]);
-                    if(distance < 10){ // if distance less than 10, output it
-                        System.out.printf("The distance between (%f,%f) and (%f,%f) is %f\n",points[i].x(),points[i].y(),points[j].x(),points[j].y(), distance);
-                    } 
+                    if (distance < 10) { // if distance less than 10, output it
+                        System.out.printf("The distance between (%f,%f) and (%f,%f) is %f\n", points[i].x(),
+                                points[i].y(), points[j].x(), points[j].y(), distance);
+                    }
 
                 }
             }
@@ -58,7 +59,7 @@ public class Point2D {
         Point2D second = new Point2D(3, 3);
         Point2D third = new Point2D(6, 0);
         Point2D fourth = new Point2D(4, 4);
-        
+
         Point2D test = new Point2D(3, 5);
         Point2D test2 = new Point2D(8, 9);
         Point2D[] stuff = { test, test2 }; // array containing object points

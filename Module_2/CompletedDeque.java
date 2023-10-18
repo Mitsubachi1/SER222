@@ -1,5 +1,6 @@
-//package edu.ser222.m01_03;
-package Module_2;
+package edu.ser222.m01_03; //server
+
+//package Module_2; //local storage
 
 import java.util.NoSuchElementException;
 
@@ -9,7 +10,7 @@ import java.util.NoSuchElementException;
  * demonstrates it.
  * 
  * @author Angel Chiquito, Acuna
- * @version (version)
+ * @version 10/16/23
  */
 
 public class CompletedDeque<Item> implements Deque<Item> {
@@ -103,6 +104,9 @@ public class CompletedDeque<Item> implements Deque<Item> {
      * @throws NoSuchElementException if the deque is empty
      */
     public Item first() throws NoSuchElementException {
+        if (isEmpty()) {
+            throw new NoSuchElementException(); // throw on empty
+        }
         Item element = front.data;
         return element;
     }
@@ -115,6 +119,9 @@ public class CompletedDeque<Item> implements Deque<Item> {
      * @throws NoSuchElementException if the deque is empty
      */
     public Item last() throws NoSuchElementException {
+        if (isEmpty()) {
+            throw new NoSuchElementException(); // throw on empty
+        }
         Item element = back.data;
         return element;
     }
@@ -150,14 +157,14 @@ public class CompletedDeque<Item> implements Deque<Item> {
     @Override
     public String toString() {
         StringBuilder stringresult = new StringBuilder();
-        Node<Item> node = front;
+        Node<Item> node = back;
         if (isEmpty()) {
             return "empty";
         }
         while (node != null) {
             stringresult.append(node.data);
             stringresult.append(" "); // space
-            node = node.next; // move to the next node
+            node = node.previous; // move to the next node
         }
         return stringresult.toString();
     }

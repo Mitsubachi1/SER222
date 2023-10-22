@@ -59,6 +59,8 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         if (head == tail) { // handle one element case
             head = null;
             tail = null;
+            count--;
+            modChange++;
             return element;
         }
         head = head.getNext();
@@ -133,14 +135,14 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
     }
 
     public T first() {
-        if (isEmpty()) {
+        if (isEmpty() || head == null) { // case check if head be null
             throw new NoSuchElementException();
         }
         return head.getData();
     }
 
     public T last() {
-        if (isEmpty()) {
+        if (isEmpty() || tail == null) { // case check if tail is null
             throw new NoSuchElementException();
         }
         return tail.getData();
@@ -159,7 +161,7 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
     }
 
     public boolean isEmpty() {
-        if (count == 0) {
+        if (count == 0 || (head == null && tail == null)) { // use head tail and count to check for empty
             return true;
         } else
             return false;

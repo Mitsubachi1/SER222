@@ -14,7 +14,9 @@ public class Driver {
         OrderedListADT<Integer> list2 = new CompletedOrderedList<>();
         //RA: These are _extremely_ simple tests! You will need to write more!
         list2.add(1);
+        list2.first();
         list2.removeFirst();
+        System.out.print(list2.isEmpty());
         list.add(23);
         list.add(24);	
         list.add(16);

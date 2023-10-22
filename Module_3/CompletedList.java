@@ -1,5 +1,5 @@
-//package edu.ser222.m01_03;
-package Module_3; //local storage
+package edu.ser222.m01_03;
+//package Module_3; //local storage
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -14,7 +14,6 @@ import java.util.NoSuchElementException;
 
 public class CompletedList<T> implements ListADT<T>, Iterable<T> {
 
-
     protected int count;
     protected int modChange;
     protected DoubleLinearNode<T> head, tail;
@@ -24,14 +23,14 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         private DoubleLinearNode<T> next;
         private DoubleLinearNode<T> previous;
 
-        public DoubleLinearNode(T element) { //constructor
+        public DoubleLinearNode(T element) { // constructor
             this.elementData = element;
             this.next = null;
             this.previous = null;
         }
 
         // get set
-        public T getData() { 
+        public T getData() {
             return elementData;
         }
 
@@ -46,11 +45,11 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         public void setNext(DoubleLinearNode<T> node) {
             next = node;
         }
-        public void setPrevious(DoubleLinearNode<T> node){
+
+        public void setPrevious(DoubleLinearNode<T> node) {
             previous = node;
         }
     }
-
 
     public T removeFirst() throws NoSuchElementException {
         if (isEmpty()) {
@@ -62,7 +61,6 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         modChange++;
         return element;
     }
-
 
     public T removeLast() throws NoSuchElementException {
         if (isEmpty()) {
@@ -80,7 +78,6 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         return element;
     }
 
-
     public T remove(T element) {
         if (!contains(element)) {
             throw new NoSuchElementException("The element is not in the collection.");
@@ -88,42 +85,40 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         /*
          * find the element
          * get the previous and next
-         * now that we got that lets set the previous node to next node 
+         * now that we got that lets set the previous node to next node
          * set element to null to remove data
-         * also remove count 
+         * also remove count and upp the modchange
          */
         DoubleLinearNode<T> nodeToRemove = head;
         while (nodeToRemove != null && !nodeToRemove.getData().equals(element)) {
             nodeToRemove = nodeToRemove.getNext(); // find node to remove
         }
-    
+
         if (nodeToRemove == null) {
             throw new NoSuchElementException("The element was not found in the collection.");
         }
-    
+        // get the elements
         DoubleLinearNode<T> previousNode = nodeToRemove.getPrevious();
         DoubleLinearNode<T> nextNode = nodeToRemove.getNext();
-    
+        // account for null cases
         if (previousNode != null) {
             previousNode.setNext(nextNode);
         } else {
-            // If the node to remove is the head, update the head
             head = nextNode;
         }
-    
+
         if (nextNode != null) {
             nextNode.setPrevious(previousNode);
         } else {
-            // If the node to remove is the tail, update the tail
             tail = previousNode;
         }
-    
+        //delete data for space
         T removedElement = nodeToRemove.getData();
         nodeToRemove.setNext(null);
         nodeToRemove.setPrevious(null);
         modChange++;
         count--;
-    
+
         return removedElement;
     }
 
@@ -134,7 +129,6 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         return head.getData();
     }
 
-
     public T last() {
         if (isEmpty()) {
             throw new NoSuchElementException();
@@ -142,7 +136,7 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         return tail.getData();
     }
 
-//?BUGCHECK:COMPLETE, WORKS
+    // ?BUGCHECK:COMPLETE, WORKS
     public boolean contains(T target) {
         DoubleLinearNode<T> current = head;
         while (current != null) {
@@ -161,11 +155,9 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
             return false;
     }
 
-
     public int size() {
         return count;
     }
-
 
     public Iterator<T> iterator() {
         // Placeholder implementation of iterator
@@ -192,7 +184,6 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
             }
         };
     }
-
 
     public String toString() {
         StringBuilder sb = new StringBuilder();

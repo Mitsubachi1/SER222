@@ -14,8 +14,7 @@ import java.util.NoSuchElementException;
 
 public class CompletedList<T> implements ListADT<T>, Iterable<T> {
 
-    // The following three variables are a suggested start if you are using a list
-    // implementation.
+
     protected int count;
     protected int modChange;
     protected DoubleLinearNode<T> head, tail;
@@ -25,14 +24,14 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         private DoubleLinearNode<T> next;
         private DoubleLinearNode<T> previous;
 
-        public DoubleLinearNode(T element) {
+        public DoubleLinearNode(T element) { //constructor
             this.elementData = element;
             this.next = null;
             this.previous = null;
         }
 
-        // Getters and setters for the element, next, and previous references
-        public T getData() {
+        // get set
+        public T getData() { 
             return elementData;
         }
 
@@ -52,16 +51,10 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         }
     }
 
-    // TODO: implement this!
-    /**
-     * Removes and returns the first element from this collection.
-     * 
-     * @return the first element from this collection
-     * @throws NoSuchElementException if the collection is empty
-     */
+
     public T removeFirst() throws NoSuchElementException {
         if (isEmpty()) {
-            throw new NoSuchElementException("The collection is empty.");
+            throw new NoSuchElementException();
         }
         T element = head.getData();
         head = head.getNext();
@@ -70,15 +63,10 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         return element;
     }
 
-    /**
-     * Removes and returns the last element from this collection.
-     *
-     * @return the last element from this collection
-     * @throws NoSuchElementException if the collection is empty
-     */
+
     public T removeLast() throws NoSuchElementException {
         if (isEmpty()) {
-            throw new NoSuchElementException("The collection is empty.");
+            throw new NoSuchElementException();
         }
         T element = tail.getData();
         DoubleLinearNode<T> newTail = head;
@@ -92,55 +80,69 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         return element;
     }
 
-    /**
-     * Removes and returns the specified element from this collection.
-     *
-     * @param element the element to be removed from the collection
-     * @throws NoSuchElementException if the target is not in the collection
-     */
+
     public T remove(T element) {
-        // Placeholder logic to find and remove the element
         if (!contains(element)) {
             throw new NoSuchElementException("The element is not in the collection.");
         }
-        // Implement the logic to remove the element and update the list
+        /*
+         * find the element
+         * get the previous and next
+         * now that we got that lets set the previous node to next node 
+         * set element to null to remove data
+         * also remove count 
+         */
+        DoubleLinearNode<T> nodeToRemove = head;
+        while (nodeToRemove != null && !nodeToRemove.getData().equals(element)) {
+            nodeToRemove = nodeToRemove.getNext(); // find node to remove
+        }
+    
+        if (nodeToRemove == null) {
+            throw new NoSuchElementException("The element was not found in the collection.");
+        }
+    
+        DoubleLinearNode<T> previousNode = nodeToRemove.getPrevious();
+        DoubleLinearNode<T> nextNode = nodeToRemove.getNext();
+    
+        if (previousNode != null) {
+            previousNode.setNext(nextNode);
+        } else {
+            // If the node to remove is the head, update the head
+            head = nextNode;
+        }
+    
+        if (nextNode != null) {
+            nextNode.setPrevious(previousNode);
+        } else {
+            // If the node to remove is the tail, update the tail
+            tail = previousNode;
+        }
+    
+        T removedElement = nodeToRemove.getData();
+        nodeToRemove.setNext(null);
+        nodeToRemove.setPrevious(null);
         modChange++;
-        return element;
+        count--;
+    
+        return removedElement;
     }
 
-    /**
-     * Returns, without removing, the first element in the collection.
-     *
-     * @return a reference to the first element in this collection
-     * @throws NoSuchElementException if the collection is empty
-     */
     public T first() {
         if (isEmpty()) {
-            throw new NoSuchElementException("The collection is empty.");
+            throw new NoSuchElementException();
         }
         return head.getData();
     }
 
-    /**
-     * Returns, without removing, the last element in the collection.
-     *
-     * @return a reference to the last element in this collection
-     * @throws NoSuchElementException if the collection is empty
-     */
+
     public T last() {
         if (isEmpty()) {
-            throw new NoSuchElementException("The collection is empty.");
+            throw new NoSuchElementException();
         }
         return tail.getData();
     }
 
-    /**
-     * Returns true if this collection contains the specified target element, false
-     * otherwise.
-     *
-     * @param target the target that is being sought in the collection
-     * @return true if the collection contains this element
-     */
+//?BUGCHECK:COMPLETE, WORKS
     public boolean contains(T target) {
         DoubleLinearNode<T> current = head;
         while (current != null) {
@@ -152,11 +154,6 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         return false;
     }
 
-    /**
-     * Returns true if this collection is empty and false otherwise.
-     *
-     * @return true if this collection empty
-     */
     public boolean isEmpty() {
         if (count == 0) {
             return true;
@@ -164,22 +161,12 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
             return false;
     }
 
-    /**
-     * Returns the number of elements in this collection.
-     *
-     * @return the number of elements in this collection
-     */
+
     public int size() {
         return count;
     }
 
-    /**
-     * Returns an iterator for the elements in this collection. The returned object
-     * must have implementations of hasNext() and next() that throw
-     * ConcurrentModificationException when the contents of the list change.
-     *
-     * @return an iterator over the elements in this collection
-     */
+
     public Iterator<T> iterator() {
         // Placeholder implementation of iterator
         return new Iterator<T>() {
@@ -206,23 +193,15 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         };
     }
 
-    /**
-     * Returns a string representation of this collection. If the list is empty,
-     * returns "empty".
-     *
-     * @return a string representation of this collection
-     */
+
     public String toString() {
-        // Placeholder implementation to provide a basic string representation
         StringBuilder sb = new StringBuilder();
         DoubleLinearNode<T> current = head;
         while (current != null) {
-            sb.append(current.getData()).append(", ");
+            sb.append(current.getData()).append(" ");
             current = current.getNext();
         }
-        if (sb.length() >= 2) {
-            sb.setLength(sb.length() - 2);
-        }
+
         return sb.toString();
     }
 }

@@ -11,9 +11,10 @@ import java.util.Iterator;
 public class Driver {
     public static void main(String [] args) {
         OrderedListADT<Integer> list = new CompletedOrderedList<>();
-        
+        OrderedListADT<Integer> list2 = new CompletedOrderedList<>();
         //RA: These are _extremely_ simple tests! You will need to write more!
-        
+        list2.add(1);
+        list2.removeFirst();
         list.add(23);
         list.add(24);	
         list.add(16);

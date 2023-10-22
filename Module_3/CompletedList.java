@@ -56,6 +56,11 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
             throw new NoSuchElementException();
         }
         T element = head.getData();
+        if (head == tail) { // handle one element case
+            head = null;
+            tail = null;
+            return element;
+        }
         head = head.getNext();
         count--;
         modChange++;
@@ -63,11 +68,16 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
     }
 
     public T removeLast() throws NoSuchElementException {
-        if (isEmpty()) {
+        if (isEmpty()) { // on empty
             throw new NoSuchElementException();
         }
         T element = tail.getData();
         DoubleLinearNode<T> newTail = head;
+        if (head == tail) { // handle one element case
+            head = null;
+            tail = null;
+
+        }
         while (newTail.getNext() != tail) {
             newTail = newTail.getNext();
         }
@@ -80,7 +90,7 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
 
     public T remove(T element) {
         if (!contains(element)) {
-            throw new NoSuchElementException("The element is not in the collection.");
+            throw new NoSuchElementException();
         }
         /*
          * find the element
@@ -95,7 +105,7 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         }
 
         if (nodeToRemove == null) {
-            throw new NoSuchElementException("The element was not found in the collection.");
+            throw new NoSuchElementException();
         }
         // get the elements
         DoubleLinearNode<T> previousNode = nodeToRemove.getPrevious();
@@ -112,7 +122,7 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         } else {
             tail = previousNode;
         }
-        //delete data for space
+        // delete data for space
         T removedElement = nodeToRemove.getData();
         nodeToRemove.setNext(null);
         nodeToRemove.setPrevious(null);
@@ -160,7 +170,6 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
     }
 
     public Iterator<T> iterator() {
-        // Placeholder implementation of iterator
         return new Iterator<T>() {
             private int expectedModChange = modChange;
             private DoubleLinearNode<T> current = head;
@@ -168,7 +177,7 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
             @Override
             public boolean hasNext() {
                 if (expectedModChange != modChange) {
-                    throw new ConcurrentModificationException("Collection modified during iteration.");
+                    throw new ConcurrentModificationException();
                 }
                 return current != null;
             }
@@ -186,13 +195,16 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder output = new StringBuilder();
         DoubleLinearNode<T> current = head;
+        if (count == 0) {
+            return "empty";
+        }
         while (current != null) {
-            sb.append(current.getData()).append(" ");
+            output.append(current.getData()).append(" ");
             current = current.getNext();
         }
 
-        return sb.toString();
+        return output.toString();
     }
 }

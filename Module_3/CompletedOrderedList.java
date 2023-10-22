@@ -27,13 +27,13 @@ public class CompletedOrderedList<T extends Comparable<T>> extends CompletedList
                 // If the list is empty, set the new node as both the head and the tail
                 head = newNode;
                 tail = newNode;
-            } else if (element.compareTo(head.getElement()) <= 0) {
+            } else if (element.compareTo(head.getData()) <= 0) {
                 // If the new element is less than or equal to the head, insert it as the new
                 // head
                 newNode.setNext(head);
                 head.setPrevious(newNode);
                 head = newNode;
-            } else if (element.compareTo(tail.getElement()) >= 0) {
+            } else if (element.compareTo(tail.getData()) >= 0) {
                 // If the new element is greater than or equal to the tail, insert it as the new
                 // tail
                 newNode.setPrevious(tail);
@@ -43,7 +43,7 @@ public class CompletedOrderedList<T extends Comparable<T>> extends CompletedList
                 // Otherwise, find the appropriate location to insert the element within the
                 // list
                 DoubleLinearNode<T> current = head;
-                while (current != null && element.compareTo(current.getElement()) > 0) {
+                while (current != null && element.compareTo(current.getData()) > 0) {
                     current = current.getNext();
                 }
                 // Insert the new node before the current node

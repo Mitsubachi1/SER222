@@ -161,7 +161,7 @@ public class CompletedList<T> implements ListADT<T>, Iterable<T> {
         if (count == 0) {
             return true;
         } else
-            return true;
+            return false;
     }
 
     /**

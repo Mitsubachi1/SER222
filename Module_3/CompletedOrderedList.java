@@ -22,7 +22,7 @@ public class CompletedOrderedList<T extends Comparable<T>> extends CompletedList
         if (element == null) {
             throw new NullPointerException("Cannot add a null element.");
         } else {
-            DoubleLinearNode<T> newNode = new DoubleLinearNode<>(element);
+            DoubleLinearNode<T> newNode = new DoubleLinearNode<>(element); //create new node using constructor
             if (isEmpty()) {
                 // If the list is empty, set the new node as both the head and the tail
                 head = newNode;

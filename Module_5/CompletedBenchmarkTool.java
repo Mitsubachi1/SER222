@@ -60,13 +60,19 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
      **************************************************************************/
 
     //! TODO: implement interface methods.
-        /*
-    * Generates an array of integers where half the data is 0s, half 1s.
-    
-     * @param size number of elements in the array.
-     * @return generated test set.
-    */
-    public Integer[] generateTestDataBinary(int size);
+
+    public Integer[] generateTestDataBinary(int size){
+        int[size] result;
+        int mid = size/2;
+        for(int i = 0; i < mid; i++){
+            result[i] = 0;
+        }
+        for(int i = mid; i < size; i++){
+            result[i] = 1;
+        }
+        return result; 
+
+    }
     
     /**
      * Generates an array of integers where half the data is 0s, half the
@@ -76,7 +82,12 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
      * @param size number of elements in the array.
      * @return generated test set.
      */
-    public Integer[] generateTestDataHalves(int size);
+    public Integer[] generateTestDataHalves(int size){
+        int[size] result;
+        int mid = size/2;
+//NOTE: half of a given array is 0, then for the other half, keep halving it and for each half you up the result of that
+        return result;
+    }
     
     /**
      * Generates an array of integers where half the data is 0s, and half random

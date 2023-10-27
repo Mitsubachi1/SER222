@@ -1,5 +1,5 @@
-package edu.ser222.m02_01;
-
+//package edu.ser222.m02_01; //server
+package Module_5; //local
 /**
  * A utility class to measure the running time (wall clock) of a program.
  * 

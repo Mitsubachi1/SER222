@@ -1,5 +1,5 @@
-package edu.ser222.m02_01;
-
+//package edu.ser222.m02_01; //server
+package Module_5; //local
 /**
  * An interface that defines a student's solution to the Section 02.01
  * programming homework. Contains methods that make up the structural core of a

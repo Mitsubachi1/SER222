@@ -88,17 +88,21 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
         int i = 0;
         int mid = size / 2;
         int remainder = 0;
+        int halved = 0;
         for (i = 0; i < mid; i++) { // set first half to 0
             result[i] = 0;
+            i++;
         }
-        remainder++;
-        while (i != size) {
-            int halved = ((size - 1) - mid) / 2; // distance from end and mid divided by 2, then proceed to the for loop
-            while (i <= (i + halved)) {
+        remainder++; //now remainder at 1 proceeds to increase as more halving occurs
+        while (i < size) {//! FORGOT TO KEEP TABS ON MID
+            halved = (int) Math.floor(((size - 1) - mid) / 2.0); // distance from end and mid divided by 2, then proceed to the for loop
+            for (int j = 0; j < halved && i < size; j++) {
                 result[i] = remainder;
-                i++;
+                j++;
             }
             remainder++;
+            i++;
+            System.out.print(i);
         }
         // NOTE: half of a given array is 0, then for the other half, keep halving it
         // and for each half you up the result of that
@@ -198,11 +202,18 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
 
     public static void main(String args[]) {
         BenchmarkTool me = new CompletedBenchmarkTool();
-        int size = 4096;
+        int size = 3; //4096
 
         // NOTE: feel free to change size here. all other code must go in the
         // methods.
+        //me.runBenchmarks(size);
+        //debug stuff
+        Integer[] smallArray = me.generateTestDataHalves(size);
+        Integer[] largeArray = me.generateTestDataHalfRandom(size * 2);
+        for(int i = 0; i < size; i++){
+            System.out.print(smallArray[i]);
+            //System.out.print(largeArray);
+        }
 
-        me.runBenchmarks(size);
     }
 }

@@ -1,15 +1,15 @@
-package edu.ser222.m02_01; //server
-//package Module_5; //local
+//package edu.ser222.m02_01; //server
+package Module_5; //local
 
 import java.util.Random;
 import java.text.DecimalFormat;
 /*
  *This program benchmarks all sorting methods
  * 
- * Completion time: (estimation of hours spent on this program)
+ * Completion time: 5 hours
  *
  * @author Angel Chiquito, Acuna, Sedgewick
- * @version 10/28/23
+ * @version 10/30/23
  */
 
 public class CompletedBenchmarkTool implements BenchmarkTool {
@@ -190,9 +190,9 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
     double b1 = benchmarkInsertionSort(smallArray, largeArray);
     double b2 = benchmarkShellsort(smallArray, largeArray); 
 
-    System.out.println("Benchmark Results:");
-    System.out.println("Insertion Sort - Small to Large Data (b1): " + b1);
-    System.out.println("Shell Sort - Small to Large Data (b2): " + b2);
+    System.out.println("Insertion    Shellsort");
+    System.out.println("Bin    " + b1);
+    System.out.println("Half    " + b2);
 
     }
 

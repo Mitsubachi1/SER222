@@ -202,7 +202,7 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
 
     public static void main(String args[]) {
         BenchmarkTool me = new CompletedBenchmarkTool();
-        int size = 3; //4096
+        int size = 5; //4096
 
         // NOTE: feel free to change size here. all other code must go in the
         // methods.

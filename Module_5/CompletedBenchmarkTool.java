@@ -147,7 +147,11 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
      * @return b value
      */
     public double benchmarkInsertionSort(Integer[] small, Integer[] large) {
-        return 0.0;
+        Stopwatch smallTest = new Stopwatch();
+        double t1 = smallTest.elapsedTime();
+        Stopwatch largeTest = new Stopwatch();
+        double t2 = largeTest.elapsedTime();
+        return computeDoublingFormula(t1, t2);
     }
 
     /**

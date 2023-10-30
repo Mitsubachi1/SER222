@@ -1,5 +1,5 @@
-//package edu.ser222.m02_01; //server
-package Module_5; //local
+package edu.ser222.m02_01; //server
+//package Module_5; //local
 
 import java.util.Random;
 import java.text.DecimalFormat;
@@ -96,6 +96,7 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
             int halved = ((size - 1) - mid) / 2; // distance from end and mid divided by 2, then proceed to the for loop
             while (i <= (i + halved)) {
                 result[i] = remainder;
+                i++;
             }
             remainder++;
         }
@@ -166,7 +167,13 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
      * @return b value
      */
     public double benchmarkShellsort(Integer[] small, Integer[] large) {
-        return 0.0;
+        Stopwatch smallTest = new Stopwatch();
+        shellsort(small);
+        double t1 = smallTest.elapsedTime();
+        Stopwatch largeTest = new Stopwatch();
+        shellsort(large);
+        double t2 = largeTest.elapsedTime();
+        return computeDoublingFormula(t1, t2);
     }
 
     /**
@@ -180,12 +187,12 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
     Integer[] largeArray = generateTestDataHalfRandom(size * 2);
 
     // Run the sorting algorithms and compute b values
-    double b1 = benchmarkInsertionSort(smallArray, largeArray); // First sorting algorithm
-    //double b2 = benchmarkMergeSort(smallArray, largeArray); 
+    double b1 = benchmarkInsertionSort(smallArray, largeArray);
+    double b2 = benchmarkShellsort(smallArray, largeArray); 
 
     System.out.println("Benchmark Results:");
     System.out.println("Insertion Sort - Small to Large Data (b1): " + b1);
-    //System.out.println("Merge Sort - Small to Large Data (b2): " + b2);
+    System.out.println("Shell Sort - Small to Large Data (b2): " + b2);
 
     }
 

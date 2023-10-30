@@ -148,8 +148,10 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
      */
     public double benchmarkInsertionSort(Integer[] small, Integer[] large) {
         Stopwatch smallTest = new Stopwatch();
+        insertionSort(small);
         double t1 = smallTest.elapsedTime();
         Stopwatch largeTest = new Stopwatch();
+        insertionSort(large);
         double t2 = largeTest.elapsedTime();
         return computeDoublingFormula(t1, t2);
     }
@@ -174,6 +176,16 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
      * @param size size of benchmark array. to be doubled later.
      */
     public void runBenchmarks(int size) {
+    Integer[] smallArray = generateTestDataHalfRandom(size);
+    Integer[] largeArray = generateTestDataHalfRandom(size * 2);
+
+    // Run the sorting algorithms and compute b values
+    double b1 = benchmarkInsertionSort(smallArray, largeArray); // First sorting algorithm
+    //double b2 = benchmarkMergeSort(smallArray, largeArray); 
+
+    System.out.println("Benchmark Results:");
+    System.out.println("Insertion Sort - Small to Large Data (b1): " + b1);
+    //System.out.println("Merge Sort - Small to Large Data (b2): " + b2);
 
     }
 

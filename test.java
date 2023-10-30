@@ -24,6 +24,14 @@ public class test {
             address += 10;
         }
 
+
+
+
+        for(int i =0;i<n; i++){
+            for(int j = i+10; j<n;j++){
+                System.out.print("");
+            }
+        }
     }
 
 }

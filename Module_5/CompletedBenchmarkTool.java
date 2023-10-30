@@ -62,7 +62,7 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
     //! TODO: implement interface methods.
 
     public Integer[] generateTestDataBinary(int size){
-        int[size] result;
+        Integer[] result = new Integer[size];
         int mid = size/2;
         for(int i = 0; i < mid; i++){
             result[i] = 0;
@@ -83,8 +83,21 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
      * @return generated test set.
      */
     public Integer[] generateTestDataHalves(int size){
-        int[size] result;
+        Integer[] result = new Integer[size];
+        int i = 0;
         int mid = size/2;
+        int remainder = 0;
+        for(i = 0; i < mid; i++){ //set first half to 0
+            result[i] = 0;
+        }
+        remainder++;
+        while(i != size){
+            int halved = ((size - 1) - mid ) / 2; //distance from end and mid divided by 2, then proceed to the for loop
+            while(i <= (i + halved)){
+                result[i] = remainder;
+            }
+            remainder++;
+        }
 //NOTE: half of a given array is 0, then for the other half, keep halving it and for each half you up the result of that
         return result;
     }

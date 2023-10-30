@@ -1,8 +1,6 @@
 public class SortingAlgorithms {
-    
 
-
-    public class BubbleSort { //O(N^2)
+    public class BubbleSort { // O(N^2)
         public static void bubbleSort(int[] arr) {
             int n = arr.length;
             for (int i = 0; i < n; i++) {
@@ -15,30 +13,29 @@ public class SortingAlgorithms {
                 }
             }
         }
-    
 
     }
 
-    public class SelectionSort { //O(N^2)
-        public static void selectionSort(int[] arr) {
-            int n = arr.length;
-            for (int i = 0; i < n; i++) {
-                int minIndex = i;
-                for (int j = i + 1; j < n; j++) {
-                    if (arr[j] < arr[minIndex]) {
-                        minIndex = j;
-                    }
+    public static void selectionSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
                 }
-                int temp = arr[i];
-                arr[i] = arr[minIndex];
-                arr[minIndex] = temp;
             }
+            int temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+            for (int b = 0; b < arr.length; b++) {
+                System.out.print(arr[b] + ",");
+            }
+            System.out.println("");
         }
-
     }
-    
 
-    public class InsertionSort { //O(N^2)
+    public class InsertionSort {
         public static void insertionSort(int[] arr) {
             int n = arr.length;
             for (int i = 1; i < n; i++) {
@@ -49,11 +46,18 @@ public class SortingAlgorithms {
                     j--;
                 }
                 arr[j + 1] = key;
+                for (int b = 0; b < arr.length; b++) {
+                    System.out.print(arr[b] + ",");
+                }
+                System.out.println("");
             }
         }
-    
 
     }
-    
 
+    public static void main(String[] args) {
+        int[] bong = { 21, 16, 3, 7, 23, 12 };
+        InsertionSort.insertionSort(bong);
+    }
 }
+

@@ -1,10 +1,11 @@
-package edu.ser222.m02_01; //server
-//package Module_5; //local
+//package edu.ser222.m02_01; //server
+package Module_5; //local
 
 import java.util.Random;
 import java.text.DecimalFormat;
 /*
- *This program benchmarks all sorting methods
+ *This program benchmarks all sorting methodslemme check
+
  * 
  * Completion time: 10 hours
  *
@@ -209,7 +210,7 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
 
     public static void main(String args[]) {
         BenchmarkTool me = new CompletedBenchmarkTool();
-        int size = 4096; // 4096
+        int size = 200000; // 4096
 
         // NOTE: feel free to change size here. all other code must go in the
         // methods.

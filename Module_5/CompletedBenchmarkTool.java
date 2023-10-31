@@ -1,12 +1,12 @@
-//package edu.ser222.m02_01; //server
-package Module_5; //local
+package edu.ser222.m02_01; //server
+//package Module_5; //local
 
 import java.util.Random;
 import java.text.DecimalFormat;
 /*
  *This program benchmarks all sorting methods
  * 
- * Completion time: 5 hours
+ * Completion time: 10 hours
  *
  * @author Angel Chiquito, Acuna, Sedgewick
  * @version 10/30/23
@@ -88,24 +88,24 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
         int i = 0;
         int mid = size / 2;
         int remainder = 0;
-        int halved = 0;
         for (i = 0; i < mid; i++) { // set first half to 0
             result[i] = 0;
-            i++;
         }
-        remainder++; //now remainder at 1 proceeds to increase as more halving occurs
-        while (i < size) {//! FORGOT TO KEEP TABS ON MID
-            halved = (int) Math.floor(((size - 1) - mid) / 2.0); // distance from end and mid divided by 2, then proceed to the for loop
-            for (int j = 0; j < halved && i < size; j++) {
-                result[i] = remainder;
-                j++;
+        remainder++; // now remainder at 1 proceeds to increase as more halving occurs
+        while (i < size - 1) {
+            mid = (int) (Math.ceil((size - mid) / 2.0) + i);
+            // distance from end and mid divided by 2, then proceed to the for loop
+            for (int j = i; j < mid; j++) {
+                result[j] = remainder;
+                i++;
             }
             remainder++;
-            i++;
-            System.out.print(i);
+            if (i == size - 1) { // to offload the last element
+                result[i] = remainder;
+                i++;
+            }
+
         }
-        // NOTE: half of a given array is 0, then for the other half, keep halving it
-        // and for each half you up the result of that
         return result;
     }
 
@@ -122,9 +122,9 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
 
         for (int i = 0; i < size; i++) {
             if (i < size / 2) {
-                result[i] = 0; 
+                result[i] = 0;
             } else {
-                result[i] = random.nextInt(Integer.MAX_VALUE); //!Gotta check this
+                result[i] = random.nextInt(Integer.MAX_VALUE);
             }
         }
 
@@ -187,33 +187,41 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
      * @param size size of benchmark array. to be doubled later.
      */
     public void runBenchmarks(int size) {
-    Integer[] smallArray = generateTestDataHalfRandom(size);
-    Integer[] largeArray = generateTestDataHalfRandom(size * 2);
+        Integer[] smallArrayBin = generateTestDataBinary(size);
+        Integer[] largeArrayBin = generateTestDataBinary(size * 2);
+        Integer[] smallArrayHalf = generateTestDataHalves(size);
+        Integer[] largeArrayHalf = generateTestDataHalves(size * 2);
+        Integer[] smallArrayRandom = generateTestDataHalfRandom(size);
+        Integer[] largeArrayRandom = generateTestDataHalfRandom(size * 2);
 
-    // Run the sorting algorithms and compute b values
-    double b1 = benchmarkInsertionSort(smallArray, largeArray);
-    double b2 = benchmarkShellsort(smallArray, largeArray); 
-
-    System.out.println("Insertion    Shellsort");
-    System.out.println("Bin    " + b1);
-    System.out.println("Half    " + b2);
-
+        // Run the sorting algorithms and compute b values
+        double b1 = benchmarkInsertionSort(smallArrayBin, largeArrayBin);
+        double b2 = benchmarkInsertionSort(smallArrayBin, largeArrayBin);
+        double b3 = benchmarkInsertionSort(smallArrayHalf, largeArrayHalf);
+        double b4 = benchmarkShellsort(smallArrayHalf, largeArrayHalf);
+        double b5 = benchmarkShellsort(smallArrayRandom, largeArrayRandom); // idk
+        double b6 = benchmarkInsertionSort(smallArrayRandom, largeArrayRandom);
+        System.out.println("Insertion    Shellsort");
+        System.out.printf("Bin    %.3f %.3f\n", b1, b2);
+        System.out.printf("Half    %.3f %.3f\n", b3, b4);
+        System.out.printf("RanInt %.3f %.3f\n", b5, b6);
     }
 
     public static void main(String args[]) {
         BenchmarkTool me = new CompletedBenchmarkTool();
-        int size = 5; //4096
+        int size = 4096; // 4096
 
         // NOTE: feel free to change size here. all other code must go in the
         // methods.
-        //me.runBenchmarks(size);
-        //debug stuff
-        Integer[] smallArray = me.generateTestDataHalves(size);
-        Integer[] largeArray = me.generateTestDataHalfRandom(size * 2);
-        for(int i = 0; i < size; i++){
-            System.out.print(smallArray[i]);
-            //System.out.print(largeArray);
-        }
-
+        me.runBenchmarks(size);
+        // debug stuff
+        /*
+         * Integer[] smallArray = me.generateTestDataHalves(size);
+         * Integer[] largeArray = me.generateTestDataHalfRandom(size * 2);
+         * for (int i = 0; i < size; i++) {
+         * System.out.print(smallArray[i]);
+         * // System.out.print(largeArray);
+         * }
+         */
     }
 }

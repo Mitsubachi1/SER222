@@ -56,8 +56,7 @@ public class SortingAlgorithms {
     }
 
     public static void main(String[] args) {
-        int[] bong = { 21, 16, 3, 7, 23, 12 };
+        int[] bong = { 97, 8, 7, 45, 13, 325, 9, 1 };
         InsertionSort.insertionSort(bong);
     }
 }
-

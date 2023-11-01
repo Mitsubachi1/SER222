@@ -1,5 +1,5 @@
-package edu.ser222.m02_01; //server
-//package Module_5; //local
+//package edu.ser222.m02_01; //server
+package Module_5; //local
 
 import java.util.Random;
 import java.text.DecimalFormat;
@@ -210,11 +210,15 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
 
     public static void main(String args[]) {
         BenchmarkTool me = new CompletedBenchmarkTool();
-        int size = 200000; // 4096
+        BenchmarkTool second = new CompletedBenchmarkTool();
+        int size = 4096    ; // 4096
 
         // NOTE: feel free to change size here. all other code must go in the
         // methods.
-        me.runBenchmarks(size);
+        for(int i = 1; i < 18; i++){
+            System.out.println("Size: " + size * i );
+            me.runBenchmarks(size * i);
+        }
         // debug stuff
         /*
          * Integer[] smallArray = me.generateTestDataHalves(size);

@@ -1,5 +1,5 @@
-//package edu.ser222.m02_01; //server
-package Module_5; //local
+package edu.ser222.m02_01; //server
+//package Module_5; //local
 
 import java.util.Random;
 import java.text.DecimalFormat;
@@ -197,15 +197,15 @@ public class CompletedBenchmarkTool implements BenchmarkTool {
 
         // Run the sorting algorithms and compute b values
         double b1 = benchmarkInsertionSort(smallArrayBin, largeArrayBin);
-        double b2 = benchmarkInsertionSort(smallArrayBin, largeArrayBin);
-        double b3 = benchmarkInsertionSort(smallArrayHalf, largeArrayHalf);
-        double b4 = benchmarkShellsort(smallArrayHalf, largeArrayHalf);
-        double b5 = benchmarkShellsort(smallArrayRandom, largeArrayRandom); // idk
-        double b6 = benchmarkInsertionSort(smallArrayRandom, largeArrayRandom);
+        double b2 = benchmarkInsertionSort(smallArrayHalf, largeArrayHalf);
+        double b3 = benchmarkInsertionSort(smallArrayRandom, largeArrayRandom);
+        double b4 = benchmarkShellsort(smallArrayBin, largeArrayBin);
+        double b5 = benchmarkShellsort(smallArrayHalf, largeArrayHalf);
+        double b6 = benchmarkShellsort(smallArrayRandom, largeArrayRandom);
         System.out.println("Insertion    Shellsort");
-        System.out.printf("Bin    %.3f %.3f\n", b1, b2);
-        System.out.printf("Half    %.3f %.3f\n", b3, b4);
-        System.out.printf("RanInt %.3f %.3f\n", b5, b6);
+        System.out.printf("Bin    %.3f %.3f\n", b1, b4);
+        System.out.printf("Half    %.3f %.3f\n", b2, b5);
+        System.out.printf("RanInt %.3f %.3f\n", b3, b6);
     }
 
     public static void main(String args[]) {

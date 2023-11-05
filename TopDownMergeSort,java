@@ -1,15 +1,6 @@
+package SER222;
 public class TopDownMergeSort {
-    public static void main(String[] args) {
-        int[] arr = {2,13,16,3,7,23,12,25};
-        
-        System.out.println("Original Array:");
-        printArray(arr);
 
-        mergeSort(arr);
-
-        System.out.println("\nSorted Array:");
-        printArray(arr);
-    }
 
     // Merge Sort function
     public static void mergeSort(int[] arr) {
@@ -67,5 +58,16 @@ public class TopDownMergeSort {
             System.out.print(value + " ");
         }
         System.out.println();
+    }   
+     public static void main(String[] args) {
+        int[] arr = {2,13,16,3,7,23,12,25};
+        
+        System.out.println("Original Array:");
+        printArray(arr);
+
+        mergeSort(arr);
+
+        System.out.println("\nSorted Array:");
+        printArray(arr);
     }
 }

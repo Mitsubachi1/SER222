@@ -57,39 +57,32 @@ public class SortingAlgorithms {
 
     public class TopDownMergeSort {
 
-        // Merge Sort function
-        public static void mergeSort(int[] arr) {
-            int n = arr.length;
-            if (n < 2) {
-                return; // Array is already sorted
+        public static void mergeSort(int[] arr, int low, int high) {
+            if (low < high) {
+                int mid = (low + high) / 2;
+                System.out.println("Sorting range: low=" + low + ", mid=" + mid + ", high=" + high);
+                mergeSort(arr, low, mid);
+                mergeSort(arr, mid + 1, high);
+                merge(arr, low, mid, high);
             }
-
-            int mid = n / 2;
-            int[] left = new int[mid];
-            int[] right = new int[n - mid];
-
-            // Populate left and right subarrays
-            for (int i = 0; i < mid; i++) {
-                left[i] = arr[i];
-            }
-            for (int i = mid; i < n; i++) {
-                right[i - mid] = arr[i];
-            }
-
-            // Recursively sort left and right subarrays
-            mergeSort(left);
-            mergeSort(right);
-
-            // Merge the sorted subarrays
-            merge(arr, left, right);
         }
-
+    
         // Merge function to combine two sorted arrays
-        public static void merge(int[] arr, int[] left, int[] right) {
-            int nL = left.length;
-            int nR = right.length;
-            int i = 0, j = 0, k = 0;
-
+        public static void merge(int[] arr, int low, int mid, int high) {
+            int nL = mid - low + 1;
+            int nR = high - mid;
+            int[] left = new int[nL];
+            int[] right = new int[nR];
+    
+            for (int i = 0; i < nL; i++) {
+                left[i] = arr[low + i];
+            }
+            for (int i = 0; i < nR; i++) {
+                right[i] = arr[mid + i + 1];
+            }
+    
+            int i = 0, j = 0, k = low;
+    
             while (i < nL && j < nR) {
                 if (left[i] <= right[j]) {
                     arr[k++] = left[i++];
@@ -97,16 +90,15 @@ public class SortingAlgorithms {
                     arr[k++] = right[j++];
                 }
             }
-
+    
             while (i < nL) {
                 arr[k++] = left[i++];
             }
-
+    
             while (j < nR) {
                 arr[k++] = right[j++];
             }
         }
-
         // Helper function to print an array
         public static void printArray(int[] arr) {
             for (int value : arr) {
@@ -123,7 +115,7 @@ public class SortingAlgorithms {
             System.out.println("Original Array:");
             TopDownMergeSort.printArray(arr);
 
-            TopDownMergeSort.mergeSort(arr);
+            TopDownMergeSort.mergeSort(arr, 0 , arr.length -1);
 
             System.out.println("\nSorted Array:");
             TopDownMergeSort.printArray(arr);

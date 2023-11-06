@@ -107,8 +107,6 @@ public class SortingAlgorithms {
             System.out.println();
         }
 
-
-    }
         public static void main(String[] args) {
             int[] arr = { 2, 13, 16, 3, 7, 23, 12, 25 };
 
@@ -120,4 +118,6 @@ public class SortingAlgorithms {
             System.out.println("\nSorted Array:");
             TopDownMergeSort.printArray(arr);
         }
+    }
+
 }

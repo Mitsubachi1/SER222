@@ -1,5 +1,5 @@
-package edu.ser222.m02_02;
-
+//package edu.ser222.m02_02;
+package Module_6;
 /**
  * Implements various divide and conquer algorithms.
  *
@@ -17,31 +17,103 @@ public class CompletedMerging implements MergingAlgorithms {
     //TODO: implement interface methods.
     @Override
     public <T extends Comparable> Queue<T> mergeQueues(Queue<T> q1, Queue<T> q2) {
-        //TODO: implement this!
-        return null;
+        Queue<T> mergedQueue = new ListQueue<>();
+
+
+
+        // Add any remaining elements from q1 and q2, if any
+        while (!q1.isEmpty()) {
+            mergedQueue.enqueue(q1.dequeue());
+        }
+
+        while (!q2.isEmpty()) {
+            mergedQueue.enqueue(q2.dequeue());
+        }
+
+        return mergedQueue;
     }
+    
 
     @Override
     public void sort(Comparable[] a) {
-        //TODO: implement this!
+        Comparable[] sortedArray = mergesort(a);
+        System.arraycopy(sortedArray, 0, a, 0, a.length);
     }
 
     @Override
     public Comparable[] mergesort(Comparable[] a) {
-        //TODO: implement this!
-        return null;
+        if (a.length <= 1) {
+            return a;
+        }
+
+        int mid = a.length / 2;
+
+        Comparable[] left = new Comparable[mid];
+        Comparable[] right = new Comparable[a.length - mid];
+
+        System.arraycopy(a, 0, left, 0, mid);
+        System.arraycopy(a, mid, right, 0, a.length - mid);
+
+        left = mergesort(left);
+        right = mergesort(right);
+
+
+        return merge(left, right);
     }
 
     @Override
     public Comparable[] merge(Comparable[] a, Comparable[] b) {
-        //TODO: implement this!
-        return null;
+        Comparable[] result = new Comparable[a.length + b.length];
+                                                                        //!issue here
+        int i = 0, j = 0, k = 0;
+        
+        while (i < a.length && j < b.length) {
+            if (a[i].compareTo(b[j]) <= 0) {
+                result[k] = a[i];
+                i++;
+            } else {
+                result[k] = b[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < a.length) {
+            result[k] = a[i];
+            i++;
+            k++;
+        }
+
+        while (j < b.length) {
+            result[k] = b[j];
+            j++;
+            k++;
+        }
+
+        return result;
     }
 
     @Override
     public void shuffle(Object[] a) {
-        //TODO: implement this!
+        Random rand = new Random();
+
+
+        int n = a.length;
+        Object[] shuffled = new Object[n];
+
+        for (int i = 0; i < n; i++) {
+            int j = rand.nextInt(i + 1);
+
+            if (j != i) {
+                shuffled[i] = shuffled[j];
+            }
+
+            shuffled[j] = a[i];
+        }
+
+        System.arraycopy(shuffled, 0, a, 0, n);
     }
+    
      
     /**
      * entry point for sample output.

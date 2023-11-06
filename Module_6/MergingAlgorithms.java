@@ -4,8 +4,8 @@
  * @author Acuna
  * @verison 1.1
  */
-package edu.ser222.m02_02;
-
+//package edu.ser222.m02_02;
+package Module_6;
 public interface MergingAlgorithms {
 
     /**

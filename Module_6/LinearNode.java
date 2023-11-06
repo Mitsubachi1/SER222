@@ -1,4 +1,5 @@
-package edu.ser222.m02_02;
+//package edu.ser222.m02_02;
+package Module_6;
 
 /**
  * Represents a node in a singly linked list.

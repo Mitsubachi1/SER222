@@ -1,4 +1,4 @@
-public class test {
+/*public class test {
 
     public static void main(String[] c) {
         int n;
@@ -45,4 +45,69 @@ public static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int 
         else if (less(aux[j], aux[i])){a[k] = aux[j++];}
         else {a[k] = aux[i++];}
     }
+}*/
+public class test {
+
+    public static void mergeSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int mid = (low + high) / 2;
+            //System.out.println("Sorting range: low=" + low + ", mid=" + mid + ", high=" + high);
+            mergeSort(arr, low, mid);
+            mergeSort(arr, mid + 1, high);
+            merge(arr, low, mid, high);
+        }
+    }
+
+    // Merge function to combine two sorted arrays
+    public static void merge(int[] arr, int low, int mid, int high) {
+        int nL = mid - low + 1;
+        int nR = high - mid;
+        int[] left = new int[nL];
+        int[] right = new int[nR];
+
+        for (int i = 0; i < nL; i++) {
+            left[i] = arr[low + i];
+        }
+        for (int i = 0; i < nR; i++) {
+            right[i] = arr[mid + i + 1];
+        }
+
+        int i = 0, j = 0, k = low;
+
+        while (i < nL && j < nR) {
+            if (left[i] <= right[j]) {
+                arr[k++] = left[i++];
+            } else {
+                arr[k++] = right[j++];
+            }
+        }
+
+        while (i < nL) {
+            arr[k++] = left[i++];
+        }
+
+        while (j < nR) {
+            arr[k++] = right[j++];
+        }
+        printArray(arr);
+    }
+    // Helper function to print an array
+    public static void printArray(int[] arr) {
+        for (int value : arr) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        int[] arr = { 8,9,17,4,3,20,25,5 };
+
+        System.out.println("Original Array:");
+        printArray(arr);
+
+        mergeSort(arr, 0 , arr.length -1);
+
+        System.out.println("\nSorted Array:");
+        printArray(arr);
+    }
+
 }

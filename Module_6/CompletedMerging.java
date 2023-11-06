@@ -6,21 +6,20 @@ package Module_6;
  *
  * Last updated 4/2/2022.
  *
- * Completion time: (your completion time)
+ * Completion time: 10 hours
  *
- * @author (your name), Acuna, Sedgewick and Wayne
- * @verison (version)
+ * @author Angel Chiquito, Acuna, Sedgewick and Wayne
+ * @verison 11/4/23
  */
 import java.util.Random;
 
 public class CompletedMerging implements MergingAlgorithms {
 
-    // TODO: implement interface methods.
     @Override
     public <T extends Comparable> Queue<T> mergeQueues(Queue<T> q1, Queue<T> q2) {
         Queue<T> mergedQueue = new ListQueue<>();
-
-        // Add any remaining elements from q1 and q2, if any
+        Queue<T> sortedmergedQueue = new ListQueue<>();
+        // queue up elements
         while (!q1.isEmpty()) {
             mergedQueue.enqueue(q1.dequeue());
         }
@@ -28,8 +27,21 @@ public class CompletedMerging implements MergingAlgorithms {
         while (!q2.isEmpty()) {
             mergedQueue.enqueue(q2.dequeue());
         }
-
-        return mergedQueue;
+        // make arr, copy over elements, sort, then back to Queue<T>
+        Comparable[] sortedQueue = new Comparable[mergedQueue.size()];
+        int i = 0;
+        while (!mergedQueue.isEmpty()) {
+            T element = mergedQueue.dequeue();
+            if (element != null) {
+                sortedQueue[i] = element;
+                i++;
+            }
+        }
+        sort(sortedQueue);
+        for (Comparable element : sortedQueue) {
+            sortedmergedQueue.enqueue((T) element);
+        }
+        return sortedmergedQueue;
     }
 
     @Override
@@ -43,15 +55,11 @@ public class CompletedMerging implements MergingAlgorithms {
         if (a.length <= 1) {
             return a;
         }
-
         int mid = a.length / 2;
-
         Comparable[] left = new Comparable[mid];
         Comparable[] right = new Comparable[a.length - mid];
-
         System.arraycopy(a, 0, left, 0, mid);
         System.arraycopy(a, mid, right, 0, a.length - mid);
-
         left = mergesort(left);
         right = mergesort(right);
 
@@ -60,12 +68,10 @@ public class CompletedMerging implements MergingAlgorithms {
 
     @Override
     public Comparable[] merge(Comparable[] a, Comparable[] b) {
-        Comparable[] result = new Comparable[a.length + b.length];
-        // !issue here
+        Comparable[] result = new Comparable[a.length + b.length]; // new arr with size of both arr
         int i = 0, j = 0, k = 0;
-
         while (i < a.length && j < b.length) {
-            if (a[i].compareTo(b[j]) <= 0) {
+            if (a[i].compareTo(b[j]) <= 0) { // compare
                 result[k] = a[i];
                 i++;
             } else {
@@ -74,19 +80,16 @@ public class CompletedMerging implements MergingAlgorithms {
             }
             k++;
         }
-
         while (i < a.length) {
             result[k] = a[i];
             i++;
             k++;
         }
-
         while (j < b.length) {
             result[k] = b[j];
             j++;
             k++;
         }
-
         return result;
     }
 

@@ -94,7 +94,7 @@ public class CompletedMerging implements MergingAlgorithms {
     }
 
     @Override
-    public void shuffle(Object[] a) {
+    public void shuffle(Object[] a) { //!Homework bit
         Random rand = new Random();
         int n = a.length;
         Object[] shuffled = new Object[n]; // new arr

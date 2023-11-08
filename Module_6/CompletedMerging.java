@@ -94,21 +94,38 @@ public class CompletedMerging implements MergingAlgorithms {
     }
 
     @Override
-    public void shuffle(Object[] a) { //!Homework bit
-        Random rand = new Random();
-        int n = a.length;
-        Object[] shuffled = new Object[n]; // new arr
+    public void shuffle(Object[] a) {
 
-        for (int i = 0; i < n; i++) {
-            int j = rand.nextInt(i + 1); // using random
+        shuffleArray(a, 0, a.length - 1);
+    }
 
-            if (j != i) {
-                shuffled[i] = shuffled[j];
-            }
-
-            shuffled[j] = a[i];
+    private static void shuffleArray(Object[] a, int lo, int hi) {
+        if (lo >= hi) {
+            return;
         }
-        System.arraycopy(shuffled, 0, a, 0, n); // move over to a
+        int mid = lo + (hi - lo) / 2;
+        //recursive calls to shuffle left and right halve
+        shuffleArray(a, lo, mid);
+        shuffleArray(a, mid + 1, hi);
+        Object[] shuffledArray = new Object[hi - lo + 1]; //new arr
+        int i = lo;
+        int j = mid + 1;
+        int k = 0;
+        while (i <= mid & j <= hi) {
+            if (Math.random() < .5) {
+                shuffledArray[k++] = a[i++];
+            } else {
+                shuffledArray[k++] = a[j++];
+            }
+        }
+        while (i <= mid){
+            shuffledArray[k++] = a[i++];
+        }
+        while (j <= hi){
+            shuffledArray[k++] = a[j++];
+        }
+    System.arraycopy(shuffledArray, 0, a, lo, k);
+
     }
 
     /**

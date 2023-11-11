@@ -1,5 +1,5 @@
-package edu.ser222.m03_02;
-
+//package edu.ser222.m03_02;
+package Module_9;
 /**
  * Symbol table interface.
  * 

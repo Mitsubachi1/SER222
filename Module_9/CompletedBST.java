@@ -1,6 +1,7 @@
 //package edu.ser222.m03_02;
 
 package Module_9;
+
 /**
  * A binary search tree based implementation of a symbol table.
  * 
@@ -249,8 +250,10 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     }
 
     public boolean contains(Key key) {
-        if (get(key) != null){return false;}
-            return true;
+        if (get(key) != null) {
+            return false;
+        }
+        return true;
     }
 
     public boolean isEmpty() {
@@ -258,11 +261,12 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     }
 
     public void deleteMax() {
-        if(root == null){
+        if (root == null) {
             throw new NoSuchElementException();
         }
         deleteMax(root);
     }
+
     private Node<Key, Value> deleteMax(Node x) {
         if (x.right == null)
             return x.left;
@@ -272,26 +276,132 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     }
 
     public int size(Key lo, Key hi) { // cmp nodes and add size if in bounds
-        // TODO
-        return 0;
+        if (lo.compareTo(hi) > 0) {
+            return 0; // bad range set
+        }
+        return size(root, lo, hi);
+    }
+
+    private int size(Node<Key, Value> x, Key lo, Key hi) {
+        if (x == null) {
+            return 0;
+        }
+        int cmplo = lo.compareTo(x.key);
+        int cmphi = hi.compareTo(x.key);
+        int count = 0;
+        if (cmplo < 0) {
+            count += size(x.left, lo, hi);
+        }
+        if (cmplo <= 0 && cmphi >= 0) {
+            count++;
+        }
+        if (cmphi > 0) {
+            count += size(x.right, lo, hi);
+        }
+        return count;
     }
 
     public void putFast(Key key, Value val) {
-        // TODO
+        put(key, val);
     }
 
     public Value getFast(Key key) {
-        // TODO
-        return null;
+        return get(key);
     }
 
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public void balance() {
-        // TODO
+        // Convert the binary search tree to a balanced BST
+        root = balance(root);
     }
 
-    public String displayLevel(Key key) {
-        // TODO
-        return "";
+
+    private Node<Key, Value> balance(Node<Key, Value> x) {
+        if (x == null) {
+            return null;
+        }
+
+        // Update the size of the subtree rooted at x before balancing (if needed)
+        x.N = size(x.left) + size(x.right) + 1;
+
+        // Check the balance factor of the node
+        int balanceFactor = getBalanceFactor(x);
+
+        // Left Heavy: Right Rotation
+        if (balanceFactor > 1) {
+            if (getBalanceFactor(x.left) < 0) {
+                x.left = rotateLeft(x.left);
+            }
+            return rotateRight(x);
+        }
+
+        // Right Heavy: Left Rotation
+        if (balanceFactor < -1) {
+            if (getBalanceFactor(x.right) > 0) {
+                x.right = rotateRight(x.right);
+            }
+            return rotateLeft(x);
+        }
+
+        // Node is already balanced
+        x.left = balance(x.left);
+        x.right = balance(x.right);
+
+        return x;
+    }
+
+
+    private int getBalanceFactor(Node<Key, Value> x) {
+        return getHeight(x.left) - getHeight(x.right);
+    }
+
+    private int getHeight(Node<Key, Value> x) {
+        return (x == null) ? 0 : x.N;
+    }
+
+    private Node<Key, Value> rotateRight(Node<Key, Value> x) {
+        Node<Key, Value> y = x.left;
+        x.left = y.right;
+        y.right = x;
+
+        // Update sizes
+        x.N = size(x.left) + size(x.right) + 1;
+        y.N = size(y.left) + size(y.right) + 1;
+
+        return y;
+    }
+
+
+    private Node<Key, Value> rotateLeft(Node<Key, Value> x) {
+        Node<Key, Value> y = x.right;
+        x.right = y.left;
+        y.left = x;
+
+        // Update sizes
+        x.N = size(x.left) + size(x.right) + 1;
+        y.N = size(y.left) + size(y.right) + 1;
+
+        return y;
+    }
+
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    public String displayLevel(Key key) { // should print out the keys it traverses when it gets to given key
+        if (root == null) {
+            return "empty";
+        }
+        StringBuilder path = new StringBuilder();
+        Queue<Node<Key,Value>> cue = new LinkedList<>();
+        cue.add(getRoot());
+        while(!cue.isEmpty()){
+            Node<Key, Value> curr = cue.poll();
+            if(curr != null){
+                path.append(curr.val).append(" ");
+                cue.add(curr.left);
+                cue.add(curr.right);
+            }
+        }
+        return path.toString().trim();
     }
 
     /**

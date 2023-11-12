@@ -1,4 +1,5 @@
 //package edu.ser222.m03_02;
+
 package Module_9;
 /**
  * A binary search tree based implementation of a symbol table.
@@ -32,7 +33,7 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     public Value get(Key key) {
         Node<Key, Value> iter = root;
 
-        while(iter != null) {
+        while (iter != null) {
             int cmp = key.compareTo(iter.key);
 
             if (cmp < 0)
@@ -49,11 +50,15 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     private Value get(Node<Key, Value> x, Key key) {
         // Return value associated with key in the subtree rooted at x;
         // return null if key not present in subtree rooted at x.
-        if (x == null) return null;
+        if (x == null)
+            return null;
         int cmp = key.compareTo(x.key);
-        if (cmp < 0) return get(x.left, key);
-        else if (cmp > 0) return get(x.right, key);
-        else return x.val;
+        if (cmp < 0)
+            return get(x.left, key);
+        else if (cmp > 0)
+            return get(x.right, key);
+        else
+            return x.val;
     }
 
     @Override
@@ -79,7 +84,7 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
 
     @Override
     public Key min() {
-        if(root == null)
+        if (root == null)
             throw new NoSuchElementException();
         return min(root).key;
     }
@@ -92,19 +97,20 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
 
     @Override
     public Key max() {
-        if(root == null)
+        if (root == null)
             throw new NoSuchElementException();
         return max(root).key;
     }
 
     private Node<Key, Value> max(Node x) {
-    if (x.right == null) return x;
+        if (x.right == null)
+            return x;
         return max(x.right);
     }
 
     @Override
     public Key floor(Key key) {
-        if(root == null)
+        if (root == null)
             throw new NoSuchElementException();
 
         Node<Key, Value> x = floor(root, key);
@@ -117,11 +123,15 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
         if (x == null)
             return null;
         int cmp = key.compareTo(x.key);
-        if (cmp == 0) return x;
-        if (cmp < 0) return floor(x.left, key);
+        if (cmp == 0)
+            return x;
+        if (cmp < 0)
+            return floor(x.left, key);
         Node<Key, Value> t = floor(x.right, key);
-        if (t != null) return t;
-        else return x;
+        if (t != null)
+            return t;
+        else
+            return x;
     }
 
     @Override
@@ -130,11 +140,15 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     }
 
     private Node<Key, Value> select(Node x, int k) {
-        if (x == null) return null;
+        if (x == null)
+            return null;
         int t = size(x.left);
-        if (t > k) return select(x.left, k);
-        else if (t < k) return select(x.right, k-t-1);
-        else return x;
+        if (t > k)
+            return select(x.left, k);
+        else if (t < k)
+            return select(x.right, k - t - 1);
+        else
+            return x;
     }
 
     @Override
@@ -144,22 +158,27 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
 
     private int rank(Key key, Node<Key, Value> x) {
         // Return number of keys less than x.key in the subtree rooted at x.
-        if (x == null) return 0;
+        if (x == null)
+            return 0;
         int cmp = key.compareTo(x.key);
-        if (cmp < 0) return rank(key, x.left);
-        else if (cmp > 0) return 1 + size(x.left) + rank(key, x.right);
-        else return size(x.left);
+        if (cmp < 0)
+            return rank(key, x.left);
+        else if (cmp > 0)
+            return 1 + size(x.left) + rank(key, x.right);
+        else
+            return size(x.left);
     }
 
     @Override
     public void deleteMin() {
-        if(root == null)
+        if (root == null)
             throw new NoSuchElementException();
         root = deleteMin(root);
     }
 
     private Node<Key, Value> deleteMin(Node x) {
-        if (x.left == null) return x.right;
+        if (x.left == null)
+            return x.right;
         x.left = deleteMin(x.left);
         x.N = size(x.left) + size(x.right) + 1;
         return x;
@@ -171,14 +190,18 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     }
 
     private Node<Key, Value> delete(Node<Key, Value> x, Key key) {
-        if (x == null) return null;
+        if (x == null)
+            return null;
         int cmp = key.compareTo(x.key);
-        if (cmp < 0) x.left = delete(x.left, key);
-        else if (cmp > 0) x.right = delete(x.right, key);
-        else
-        {
-            if (x.right == null) return x.left;
-            if (x.left == null) return x.right;
+        if (cmp < 0)
+            x.left = delete(x.left, key);
+        else if (cmp > 0)
+            x.right = delete(x.right, key);
+        else {
+            if (x.right == null)
+                return x.left;
+            if (x.left == null)
+                return x.right;
             Node t = x;
             x = min(t.right);
             x.right = deleteMin(t.right);
@@ -197,65 +220,77 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     }
 
     @Override
-    public Iterable<Key> keys(Key lo, Key hi)
-    {
+    public Iterable<Key> keys(Key lo, Key hi) {
         Queue<Key> queue = new LinkedList<>();
         keys(root, queue, lo, hi);
         return queue;
     }
 
-    private void keys(Node<Key, Value> x, Queue<Key> queue, Key lo, Key hi)
-    {
-        if (x == null) return;
+    private void keys(Node<Key, Value> x, Queue<Key> queue, Key lo, Key hi) {
+        if (x == null)
+            return;
         int cmplo = lo.compareTo(x.key);
         int cmphi = hi.compareTo(x.key);
-        if (cmplo < 0) keys(x.left, queue, lo, hi);
-        if (cmplo <= 0 && cmphi >= 0) queue.add(x.key);
-        if (cmphi > 0) keys(x.right, queue, lo, hi);
+        if (cmplo < 0)
+            keys(x.left, queue, lo, hi);
+        if (cmplo <= 0 && cmphi >= 0)
+            queue.add(x.key);
+        if (cmphi > 0)
+            keys(x.right, queue, lo, hi);
     }
 
     public Key ceiling(Key key) {
-        //SKIP, UNNEEDED
+        // SKIP, UNNEEDED
         return null;
     }
+
     public Node getRoot() {
         return root;
     }
 
     public boolean contains(Key key) {
-        //TODO
-        return false;
+        if (get(key) != null){return false;}
+            return true;
     }
 
     public boolean isEmpty() {
-        //TODO
-        return false;
+        return root == null;
     }
 
-    public void deleteMax()  {
-        //TODO
+    public void deleteMax() {
+        if(root == null){
+            throw new NoSuchElementException();
+        }
+        deleteMax(root);
+    }
+    private Node<Key, Value> deleteMax(Node x) {
+        if (x.right == null)
+            return x.left;
+        x.right = deleteMin(x.right);
+        x.N = size(x.left) + size(x.right) + 1;
+        return x;
     }
 
-    public int size(Key lo, Key hi) {
-        //TODO
+    public int size(Key lo, Key hi) { // cmp nodes and add size if in bounds
+        // TODO
         return 0;
     }
 
     public void putFast(Key key, Value val) {
-        //TODO
+        // TODO
     }
 
     public Value getFast(Key key) {
-        //TODO
+        // TODO
         return null;
     }
 
     public void balance() {
-        //TODO
+        // TODO
     }
 
     public String displayLevel(Key key) {
-        //TODO
+        // TODO
         return "";
     }
 
@@ -266,19 +301,19 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
      */
     public static void main(String[] args) {
         BST<Integer, String> bst = new CompletedBST();
-        
+
         bst.put(10, "TEN");
         bst.put(3, "THREE");
         bst.put(1, "ONE");
         bst.put(5, "FIVE");
         bst.put(2, "TWO");
         bst.put(7, "SEVEN");
-        
+
         System.out.println("Before balance:");
-        System.out.println(bst.displayLevel(10)); //root
-        
+        System.out.println(bst.displayLevel(10)); // root
+
         System.out.println("After balance:");
         bst.balance();
-        System.out.println(bst.displayLevel(5)); //root
+        System.out.println(bst.displayLevel(5)); // root
     }
 }

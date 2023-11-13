@@ -1,5 +1,5 @@
-//package edu.ser222.m03_02;
-package Module_9;
+package edu.ser222.m03_02;
+//package Module_9;
 
 /**
  * A binary search tree based implementation of a symbol table.
@@ -309,68 +309,33 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     }
 
     public void balance() {
-        root = balance(root); // balance root
+        LinkedList<Node<Key, Value>> nodes = new LinkedList<>();
+
+        traversal(root, nodes);
+        root = buildBalancedTree(nodes, 0, nodes.size() - 1);
     }
 
-    private Node<Key, Value> balance(Node<Key, Value> x) {
-        if (x == null) {
+    private void traversal(Node<Key, Value> x, LinkedList<Node<Key, Value>> nodes) {
+        if (x != null) {
+            traversal(x.left, nodes);
+            nodes.add(x);
+            traversal(x.right, nodes);
+        }
+    }
+
+    private Node<Key, Value> buildBalancedTree(LinkedList<Node<Key, Value>> nodes, int start, int end) {
+        if (start > end) {
             return null;
         }
+        int mid = (start + end) / 2;
+        Node<Key, Value> root = nodes.get(mid);
 
-        // update size before balance
-        x.N = size(x.left) + size(x.right) + 1;
+        // build left right subtree and update size after
+        root.left = buildBalancedTree(nodes, start, mid - 1);
+        root.right = buildBalancedTree(nodes, mid + 1, end);
+        root.N = size(root.left) + size(root.right) + 1;
 
-        int balanceFactor = getBalanceFactor(x);
-        if (balanceFactor > 1) { // left heavy: right rotation
-            if (getBalanceFactor(x.left) < 0) {
-                x.left = rotateLeft(x.left);
-            }
-            return rotateRight(x);
-        }
-        if (balanceFactor < -1) { // right heavy: left rotation
-            if (getBalanceFactor(x.right) > 0) {
-                x.right = rotateRight(x.right);
-            }
-            return rotateLeft(x);
-        }
-        // if its balanced
-        x.left = balance(x.left);
-        x.right = balance(x.right);
-        return x;
-    }
-
-    private int getBalanceFactor(Node<Key, Value> x) {
-        return getHeight(x.left) - getHeight(x.right);
-    }
-
-    private int getHeight(Node<Key, Value> x) {
-        if (x == null) {
-            return 0;
-        }
-        return x.N;
-    }
-
-    private Node<Key, Value> rotateRight(Node<Key, Value> x) {
-        Node<Key, Value> y = x.left;
-        x.left = y.right;
-        y.right = x;
-
-        // update size
-        x.N = size(x.left) + size(x.right) + 1;
-        y.N = size(y.left) + size(y.right) + 1;
-
-        return y;
-    }
-
-    private Node<Key, Value> rotateLeft(Node<Key, Value> x) {
-        Node<Key, Value> y = x.right;
-        x.right = y.left;
-        y.left = x;
-
-        x.N = size(x.left) + size(x.right) + 1;
-        y.N = size(y.left) + size(y.right) + 1;
-
-        return y;
+        return root;
     }
 
     public String displayLevel(Key key) { // should print out the keys it traverses when it gets to given key
@@ -408,7 +373,6 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
 
         System.out.println("Before balance:");
         System.out.println(bst.displayLevel(10)); // root
-
 
         System.out.println("After balance:");
         bst.balance();

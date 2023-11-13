@@ -4,10 +4,10 @@ package edu.ser222.m03_02;
 /**
  * A binary search tree based implementation of a symbol table.
  * 
- * Completion time: (your completion time)
+ * Completion time: 24 Hours
  *
- * @author (your name), Sedgewick, Acuna
- * @version (version)
+ * @author Angel Chiquito, Sedgewick, Acuna
+ * @version 11/12/23
  */
 import java.util.Collections;
 import java.util.LinkedList;
@@ -48,8 +48,6 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     }
 
     private Value get(Node<Key, Value> x, Key key) {
-        // Return value associated with key in the subtree rooted at x;
-        // return null if key not present in subtree rooted at x.
         if (x == null)
             return null;
         int cmp = key.compareTo(x.key);
@@ -157,7 +155,6 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     }
 
     private int rank(Key key, Node<Key, Value> x) {
-        // Return number of keys less than x.key in the subtree rooted at x.
         if (x == null)
             return 0;
         int cmp = key.compareTo(x.key);
@@ -344,7 +341,7 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
         }
         StringBuilder path = new StringBuilder();
         Queue<Node<Key, Value>> cue = new LinkedList<>();
-        cue.add(getRoot());
+        cue.add(getNode(root, key));
         while (!cue.isEmpty()) {
             Node<Key, Value> curr = cue.poll();
             if (curr != null) {
@@ -354,6 +351,22 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
             }
         }
         return path.toString().trim();
+    }
+
+    private Node<Key, Value> getNode(Node<Key, Value> x, Key key) {
+        if (x == null) {
+            return null;
+        }
+
+        int cmp = key.compareTo(x.key);
+
+        if (cmp < 0) {
+            return getNode(x.left, key);
+        } else if (cmp > 0) {
+            return getNode(x.right, key);
+        } else {
+            return x;
+        }
     }
 
     /**

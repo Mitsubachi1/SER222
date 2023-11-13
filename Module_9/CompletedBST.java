@@ -1,5 +1,4 @@
 //package edu.ser222.m03_02;
-
 package Module_9;
 
 /**
@@ -251,9 +250,9 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
 
     public boolean contains(Key key) {
         if (get(key) != null) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public boolean isEmpty() {
@@ -264,13 +263,13 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
         if (root == null) {
             throw new NoSuchElementException();
         }
-        deleteMax(root);
+        root = deleteMax(root);
     }
 
     private Node<Key, Value> deleteMax(Node x) {
         if (x.right == null)
             return x.left;
-        x.right = deleteMin(x.right);
+        x.right = deleteMax(x.right);
         x.N = size(x.left) + size(x.right) + 1;
         return x;
     }
@@ -309,54 +308,46 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
         return get(key);
     }
 
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public void balance() {
-        // Convert the binary search tree to a balanced BST
-        root = balance(root);
+        root = balance(root); // balance root
     }
-
 
     private Node<Key, Value> balance(Node<Key, Value> x) {
         if (x == null) {
             return null;
         }
 
-        // Update the size of the subtree rooted at x before balancing (if needed)
+        // update size before balance
         x.N = size(x.left) + size(x.right) + 1;
 
-        // Check the balance factor of the node
         int balanceFactor = getBalanceFactor(x);
-
-        // Left Heavy: Right Rotation
-        if (balanceFactor > 1) {
+        if (balanceFactor > 1) { // left heavy: right rotation
             if (getBalanceFactor(x.left) < 0) {
                 x.left = rotateLeft(x.left);
             }
             return rotateRight(x);
         }
-
-        // Right Heavy: Left Rotation
-        if (balanceFactor < -1) {
+        if (balanceFactor < -1) { // right heavy: left rotation
             if (getBalanceFactor(x.right) > 0) {
                 x.right = rotateRight(x.right);
             }
             return rotateLeft(x);
         }
-
-        // Node is already balanced
+        // if its balanced
         x.left = balance(x.left);
         x.right = balance(x.right);
-
         return x;
     }
-
 
     private int getBalanceFactor(Node<Key, Value> x) {
         return getHeight(x.left) - getHeight(x.right);
     }
 
     private int getHeight(Node<Key, Value> x) {
-        return (x == null) ? 0 : x.N;
+        if (x == null) {
+            return 0;
+        }
+        return x.N;
     }
 
     private Node<Key, Value> rotateRight(Node<Key, Value> x) {
@@ -364,38 +355,34 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
         x.left = y.right;
         y.right = x;
 
-        // Update sizes
+        // update size
         x.N = size(x.left) + size(x.right) + 1;
         y.N = size(y.left) + size(y.right) + 1;
 
         return y;
     }
-
 
     private Node<Key, Value> rotateLeft(Node<Key, Value> x) {
         Node<Key, Value> y = x.right;
         x.right = y.left;
         y.left = x;
 
-        // Update sizes
         x.N = size(x.left) + size(x.right) + 1;
         y.N = size(y.left) + size(y.right) + 1;
 
         return y;
     }
 
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
     public String displayLevel(Key key) { // should print out the keys it traverses when it gets to given key
         if (root == null) {
             return "empty";
         }
         StringBuilder path = new StringBuilder();
-        Queue<Node<Key,Value>> cue = new LinkedList<>();
+        Queue<Node<Key, Value>> cue = new LinkedList<>();
         cue.add(getRoot());
-        while(!cue.isEmpty()){
+        while (!cue.isEmpty()) {
             Node<Key, Value> curr = cue.poll();
-            if(curr != null){
+            if (curr != null) {
                 path.append(curr.val).append(" ");
                 cue.add(curr.left);
                 cue.add(curr.right);
@@ -421,6 +408,7 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
 
         System.out.println("Before balance:");
         System.out.println(bst.displayLevel(10)); // root
+
 
         System.out.println("After balance:");
         bst.balance();

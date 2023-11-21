@@ -20,12 +20,40 @@ public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Valu
 
     @Override
     public void put(Key key, Value val) {
-        //TODO
+        int index1 = hash(key);
+        int index2 = hash2(key);
+        int indexToInsert = (table[index1] == null || table[index1].size() <= table[index2].size()) ? index1 : index2;
+
+        if (table[indexToInsert] == null) {
+            table[indexToInsert] = new LinkedList<>();
+        }
+
+        // Check if the key already exists, if so, update the value
+        for (Entry<Key, Value> entry : table[indexToInsert]) {
+            if (entry.getKey().equals(key)) {
+                entry.setValue(val);
+                return;
+            }
+        }
+
+        table[indexToInsert].add(new Entry<>(key, val));
+        size++;
     }
 
     @Override
     public Value get(Key key) {
-        //TODO
+        int index1 = hash(key);
+        int index2 = hash2(key);
+        int indexToSearch = (table[index1] == null || table[index1].size() <= table[index2].size()) ? index1 : index2;
+
+        if (table[indexToSearch] != null) {
+            for (Entry<Key, Value> entry : table[indexToSearch]) {
+                if (entry.getKey().equals(key)) {
+                    return entry.getValue();
+                }
+            }
+        }
+
         return null;
     }
 

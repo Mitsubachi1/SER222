@@ -1,5 +1,5 @@
-package edu.ser222.m03_04;
-
+//package edu.ser222.m03_04;
+package Module_10;
 /**
  * ProbingHT defines an interface to a probing (linear or quadratic) implementation of SymbolTable
  * that offers methods specific to a probing hashtable.

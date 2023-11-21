@@ -1,5 +1,5 @@
-package edu.ser222.m03_04;
-
+//package edu.ser222.m03_04;
+package Module_10;
 /**
  * TwoProbeChainHT defines an interface to a two probe chaining implementation of SymbolTable that
  * offers methods specific to a two probe chaining hashtable.

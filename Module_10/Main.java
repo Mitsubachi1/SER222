@@ -22,16 +22,16 @@ public class Main {
 
         //Uncomment as needed.
 
-        //testIntegers(new CompletedTwoProbeChainHT<Integer, Integer>());
-        //testStrings(new CompletedTwoProbeChainHT<String, Integer>());
+        testIntegers(new CompletedTwoProbeChainHT<Integer, Integer>());
+        testStrings(new CompletedTwoProbeChainHT<String, Integer>());
 
         System.out.println("GeneralProbingHT: ");
         testIntegers(new CompletedLinearProbingHT<Integer, Integer>());
         testStrings(new CompletedLinearProbingHT<String, Integer>());
         
         System.out.println("QuadProbingHT: ");
-        //testIntegers(new CompletedQuadProbingHT<Integer, Integer>());
-        //testStrings(new CompletedQuadProbingHT<String, Integer>());
+        testIntegers(new CompletedQuadProbingHT<Integer, Integer>());
+        testStrings(new CompletedQuadProbingHT<String, Integer>());
     }
     
     /**

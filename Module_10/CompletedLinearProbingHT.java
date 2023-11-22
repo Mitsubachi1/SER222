@@ -1,13 +1,12 @@
-//package edu.ser222.m03_04;
-package Module_10;
-import java.util.ArrayList;
+package edu.ser222.m03_04;
+//package Module_10;
+
 /**
  * A symbol table implemented using a hashtable with linear probing.
  * 
  * @author Angel Chiquito, Sedgewick and Wayne, Acuna
  */
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Value> {
@@ -37,14 +36,11 @@ public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Valu
     }
     @Override
     public int hash(Key key, int i) {
-        //TODO
-        return 0;
+        return ((key.hashCode() & 0x7fffffff) + i) % M;
     }
 
     @Override
     public void put(Key key, Value val) {
-        if (key == null) throw new IllegalArgumentException("Key cannot be null");
-
         int i;
         for (i = hash(key, 0); table[i] != null; i = (i + 1) % M) {
             if (table[i].key.equals(key)) {
@@ -58,8 +54,6 @@ public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Valu
 
     @Override
     public Value get(Key key) {
-        if (key == null) throw new IllegalArgumentException("Key cannot be null");
-
         for (int i = hash(key, 0); table[i] != null; i = (i + 1) % M) {
             if (table[i].key.equals(key)) {
                 return table[i].value;
@@ -70,15 +64,12 @@ public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Valu
 
     @Override
     public void delete(Key key) {
-        if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
         int i = hash(key, 0);
         while (table[i] != null) {
             if (table[i].key.equals(key)) {
                 table[i] = null;
                 size--;
-
-                // Rehash to ensure no clustering
                 i = (i + 1) % M;
                 while (table[i] != null) {
                     Node<Key, Value> rehashNode = table[i];
@@ -87,7 +78,7 @@ public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Valu
                     put(rehashNode.key, rehashNode.value);
                     i = (i + 1) % M;
                 }
-                return;
+                break;
             }
             i = (i + 1) % M;
         }
@@ -110,7 +101,7 @@ public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Valu
 
     @Override
     public Iterable<Key> keys() {
-        List<Key> keyList = new ArrayList<>();
+        LinkedList<Key> keyList = new LinkedList<>();
         for (Node<Key, Value> node : table) {
             if (node != null) {
                 keyList.add(node.key);

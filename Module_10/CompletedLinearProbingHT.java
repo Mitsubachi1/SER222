@@ -10,11 +10,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Value> {
-    private static final int initcap = 997; 
-    private int M; 
+    private static final int initcap = 997;
+    private int M;
     private int size;
-    private Node<Key, Value>[] table; 
-    //any constructors must be made public
+    private Node<Key, Value>[] table;
+
+    // any constructors must be made public
     private static class Node<Key, Value> {
         Key key;
         Value value;
@@ -34,6 +35,7 @@ public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Valu
         size = 0;
         table = new Node[M];
     }
+
     @Override
     public int hash(Key key, int i) {
         return ((key.hashCode() & 0x7fffffff) + i) % M;
@@ -64,18 +66,17 @@ public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Valu
 
     @Override
     public void delete(Key key) {
-
         int i = hash(key, 0);
         while (table[i] != null) {
             if (table[i].key.equals(key)) {
                 table[i] = null;
                 size--;
-                i = (i + 1) % M;
+                i = (i + 1) % M; // next pos
                 while (table[i] != null) {
-                    Node<Key, Value> rehashNode = table[i];
+                    Node<Key, Value> rehashNode = table[i]; // temp var
                     table[i] = null;
                     size--;
-                    put(rehashNode.key, rehashNode.value);
+                    put(rehashNode.key, rehashNode.value); // put new element to handle displacement
                     i = (i + 1) % M;
                 }
                 break;
@@ -120,7 +121,7 @@ public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Valu
 
     @Override
     public Object getTableEntry(int i) {
-        if (table[i] != null){ 
+        if (table[i] != null) {
             return table[i].value;
         }
         return null;

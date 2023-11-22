@@ -1,0 +1,105 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "CompletedMatrix",
+            "request": "launch",
+            "mainClass": "Module_1.CompletedMatrix",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "AnotherCounter",
+            "request": "launch",
+            "mainClass": "Module_1.shortanswerquiz.AnotherCounter",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "Point2D",
+            "request": "launch",
+            "mainClass": "Module_1.shortanswerquiz.Point2D",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Module_10.Main",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "CompletedDeque",
+            "request": "launch",
+            "mainClass": "Module_2.CompletedDeque",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "Driver",
+            "request": "launch",
+            "mainClass": "Module_3.Driver",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "CompletedBenchmarkTool",
+            "request": "launch",
+            "mainClass": "Module_5.CompletedBenchmarkTool",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "CompletedMerging",
+            "request": "launch",
+            "mainClass": "Module_6.CompletedMerging",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "CompletedBST",
+            "request": "launch",
+            "mainClass": "Module_9.CompletedBST",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "PriorityQueues",
+            "request": "launch",
+            "mainClass": "PriorityQueues",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "QueueUsingPriorityQueue",
+            "request": "launch",
+            "mainClass": "QueueUsingPriorityQueue",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "SortingAlgorithms$TopDownMergeSort",
+            "request": "launch",
+            "mainClass": "SortingAlgorithms$TopDownMergeSort",
+            "projectName": "SER222_998891a1"
+        },
+        {
+            "type": "java",
+            "name": "test",
+            "request": "launch",
+            "mainClass": "test",
+            "projectName": "SER222_998891a1"
+        }
+    ]
+}

@@ -1,4 +1,5 @@
-package edu.ser222.m03_04;
+//package edu.ser222.m03_04;
+package Module_10;
 
 /**
  * A symbol table implemented using a hashtable with chaining.

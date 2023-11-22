@@ -1,5 +1,5 @@
-//package edu.ser222.m03_04;
-package Module_10;
+package edu.ser222.m03_04;
+
 /**
  * A symbol table implemented using a hashtable with linear probing.
  * 
@@ -20,40 +20,12 @@ public class CompletedLinearProbingHT<Key, Value> implements ProbingHT<Key, Valu
 
     @Override
     public void put(Key key, Value val) {
-        int index1 = hash(key);
-        int index2 = hash2(key);
-        int indexToInsert = (table[index1] == null || table[index1].size() <= table[index2].size()) ? index1 : index2;
-
-        if (table[indexToInsert] == null) {
-            table[indexToInsert] = new LinkedList<>();
-        }
-
-        // Check if the key already exists, if so, update the value
-        for (Entry<Key, Value> entry : table[indexToInsert]) {
-            if (entry.getKey().equals(key)) {
-                entry.setValue(val);
-                return;
-            }
-        }
-
-        table[indexToInsert].add(new Entry<>(key, val));
-        size++;
+        //TODO
     }
 
     @Override
     public Value get(Key key) {
-        int index1 = hash(key);
-        int index2 = hash2(key);
-        int indexToSearch = (table[index1] == null || table[index1].size() <= table[index2].size()) ? index1 : index2;
-
-        if (table[indexToSearch] != null) {
-            for (Entry<Key, Value> entry : table[indexToSearch]) {
-                if (entry.getKey().equals(key)) {
-                    return entry.getValue();
-                }
-            }
-        }
-
+        //TODO
         return null;
     }
 

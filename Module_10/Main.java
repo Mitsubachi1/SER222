@@ -26,8 +26,8 @@ public class Main {
         //testStrings(new CompletedTwoProbeChainHT<String, Integer>());
 
         System.out.println("GeneralProbingHT: ");
-        //testIntegers(new CompletedLinearProbingHT<Integer, Integer>());
-        //testStrings(new CompletedLinearProbingHT<String, Integer>());
+        testIntegers(new CompletedLinearProbingHT<Integer, Integer>());
+        testStrings(new CompletedLinearProbingHT<String, Integer>());
         
         System.out.println("QuadProbingHT: ");
         //testIntegers(new CompletedQuadProbingHT<Integer, Integer>());

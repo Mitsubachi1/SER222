@@ -1,5 +1,5 @@
-//package edu.ser222.m03_04;
-package Module_10;
+package edu.ser222.m03_04;
+
 /**
  * A symbol table implemented using a hashtable with chaining.
  * Does not support load balancing or resizing.
@@ -10,26 +10,19 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class CompletedTwoProbeChainHT<Key, Value> implements TwoProbeChainHT<Key, Value> {
-    private static final int DEFAULT_CAPACITY = 10;
-    private LinkedList<TwoProbeChainHT<Key, Value>>[] table;
-    private int size;
+
     //any constructors must be made public
-    CompletedTwoProbeChainHT(){
-        table = new LinkedList[DEFAULT_CAPACITY];
-        size = 0;
-    }
-    CompletedTwoProbeChainHT(Key key, Value val){
-        this();
-        put(key, val);
-    }
+
     @Override
     public int hash(Key key) {
-        return (key.hashCode() & 0x7fffffff) % table.length;
+        //TODO
+        return 0;
     }
 
     @Override
     public int hash2(Key key) {
-        return (((key.hashCode() & 0x7fffffff % table.length) * 31 ) % table.length);
+        //TODO
+        return 0;
     }
 
     @Override
@@ -39,19 +32,8 @@ public class CompletedTwoProbeChainHT<Key, Value> implements TwoProbeChainHT<Key
 
     @Override
     public Value get(Key key) {
-        int index1 = hash(key);
-        int index2 = hash2(key);
-        int indexToSearch = (table[index1] == null || table[index1].size() <= table[index2].size()) ? index1 : index2;
-
-        if (table[indexToSearch] != null) {
-            for (TwoProbeChainHT<Key, Value> entry : table[indexToSearch]) {
-                if (entry.getKey().equals(key)) {
-                    return entry.getValue();
-                }
-            }
-        }
-
-        return null; 
+        //TODO
+        return null;
     }
 
     @Override

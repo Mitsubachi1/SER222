@@ -1,3 +1,4 @@
+package Module_12;
 /**
  * Program for generating kanji component dependency order via topological sort.
  * 

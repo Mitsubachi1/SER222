@@ -1,4 +1,3 @@
-package Module_12;
 /**
  * Program for generating kanji component dependency order via topological sort.
  * 
@@ -13,7 +12,7 @@ public class BaseMain {
      */
     public static void main(String[] args) {
         //TODO: implement this 
-
+        System.out.println("bong");
         //Freebie: this is one way to load the UTF8 formated character data.
         //BufferedReader indexReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("data-kanji.txt")), "UTF8"));
     }

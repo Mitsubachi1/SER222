@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 /**
  * Program for generating kanji component dependency order via topological sort.
  * 
@@ -37,23 +36,6 @@ public class BaseMain {
                     continue;
                 }
 
-    try {
-        Scanner scanner = new Scanner(line);
-        if (scanner.hasNextInt()) {
-            int id = scanner.nextInt();
-
-            // Assuming the next part is a string (character)
-            if (scanner.hasNext()) {
-                String character = scanner.next();
-
-                // Add to hashtable and graph
-                idToCharacter.put(id, character);
-            }
-        }
-    } catch (NumberFormatException e) {
-        System.out.println("Error parsing line: " + line + ". Skipping this line.");
-        continue; // Skip to the next iteration of the loop
-    }
                 // Split line into ID and character
                 String[] parts = line.split("\t");
             

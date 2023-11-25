@@ -1,59 +1,106 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 public class BetterDiGraph implements EditableDiGraph {
+    private Map<Integer, Set<Integer>> adjacencyList;
+    private int edgeCount;
+    
+    public BetterDiGraph() {
+        this.adjacencyList = new HashMap<>();
+        this.edgeCount = 0;
+    }
+
     @Override
     public boolean containsVertex(int v) {
-        // TODO Auto-generated method stub
-        return false;
+        return adjacencyList.containsKey(v);
     }
+
     @Override
     public Iterable<Integer> getAdj(int v) {
-        // TODO Auto-generated method stub
-        return null;
+        if (!containsVertex(v)) {
+            throw new NoSuchElementException("Vertex not found: " + v);
+        }
+        return adjacencyList.get(v);
     }
+
     @Override
     public int getEdgeCount() {
-        // TODO Auto-generated method stub
-        return 0;
+        return edgeCount;
     }
+
     @Override
     public int getIndegree(int v) throws NoSuchElementException {
-        // TODO Auto-generated method stub
-        return 0;
+        if (!containsVertex(v)) {
+            throw new NoSuchElementException("Vertex not found: " + v);
+        }
+
+        int indegree = 0;
+        for (Set<Integer> neighbors : adjacencyList.values()) {
+            if (neighbors.contains(v)) {
+                indegree++;
+            }
+        }
+
+        return indegree;
     }
+
     @Override
     public int getVertexCount() {
-        // TODO Auto-generated method stub
-        return 0;
+        return adjacencyList.size();
     }
+
     @Override
     public void removeEdge(int v, int w) {
-        // TODO Auto-generated method stub
-        
+        if (containsVertex(v) && containsVertex(w)) {
+            Set<Integer> neighbors = adjacencyList.get(v);
+            if (neighbors != null) {
+                neighbors.remove(w);
+                edgeCount--;
+            }
+        }
     }
+
     @Override
     public void removeVertex(int v) {
-        // TODO Auto-generated method stub
-        
+        if (containsVertex(v)) {
+            // Remove incoming edges
+            for (Set<Integer> neighbors : adjacencyList.values()) {
+                neighbors.remove(v);
+            }
+
+            // Remove outgoing edges
+            adjacencyList.remove(v);
+        }
     }
+
     @Override
     public Iterable<Integer> vertices() {
-        // TODO Auto-generated method stub
-        return null;
+        return adjacencyList.keySet();
     }
+
     @Override
     public void addEdge(int v, int w) {
-        // TODO Auto-generated method stub
-        
+        if (!containsVertex(v)) {
+            addVertex(v);
+        }
+        if (!containsVertex(w)) {
+            addVertex(w);
+        }
+
+        adjacencyList.computeIfAbsent(v, k -> new HashSet<>()).add(w);
+        edgeCount++;
     }
+
     @Override
     public void addVertex(int v) {
-        // TODO Auto-generated method stub
-        
+        adjacencyList.putIfAbsent(v, new HashSet<>());
     }
+
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        return false;
+        return adjacencyList.isEmpty();
     }
 }
